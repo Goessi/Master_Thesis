@@ -8,6 +8,11 @@ first version of Master thesis codes, initial model
 """
 
 class Quaternion(object):
+    """
+    
+    class of Quaternion that do the simple operations
+    
+    """    
     def __init__(self, a, b, c, d):
         assert type(a) == float and type(b) == float and type(c) == float and type(d) == float
         
