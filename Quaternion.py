@@ -69,6 +69,12 @@ class Quaternion(object):
         '''
         return math.sqrt(pow(self.a, 2) + pow(self.b, 2) + pow(self.c, 2) + pow(self.d, 2))
     
+    def norm_quaternion(self):
+        '''
+        compute normalized Quaternion object
+        '''
+        return Quaternion(self.a/self.norm(), self.b/self.norm(), self.c/self.norm(), self.d/self.norm())
+    
     def conj(self):
         '''
         compute Quaternion object complex conjugate
@@ -78,6 +84,21 @@ class Quaternion(object):
         c = -self.c
         d = -self.d
         return Quaternion(a, b, c, d)
+    
+    def rotation(self, alpha, axis):
+        '''compute Quaternion object rotation according to [x, y, z]
+        
+        arguements:
+            alpha -- rotation angle around the x axis, degrees
+            axis -- a list indicates which axi is used, [1, 0, 0] refers to x axis
+        '''
+        if alpha%360 == 0:
+            return self
+        else:
+            for i in range(len(axis)):
+                axis[i] = axis[i]*math.sin(alpha*math.pi/360)
+            q = Quaternion(math.cos(alpha*math.pi/360), axis[0], axis[1], axis[2])
+            return q*self*q.conj()
     
     def __str__(self):
         ''' document printing'''
