@@ -25,7 +25,7 @@ class Quaternion(object):
         self.a = a
         self.b = b
         self.c = c
-        self.d = d
+        self.d = d        
     
     def __add__(self, other):
         '''compute Quaternion objects addition
@@ -55,6 +55,11 @@ class Quaternion(object):
         d = self.d*other.a - self.c*other.b + self.b*other.c + self.a*other.d
         return Quaternion(a, b, c, d)
     
+    def mul_vector(self, v):
+        q = Quaternion(0.0, v[0], v[1], v[2])
+        q = self*q*self.conj()
+        return [q.b, q.c, q.d]
+    
     def dot(self, other):
         '''compute Quaternion objects dot production
         
@@ -69,11 +74,13 @@ class Quaternion(object):
         '''
         return math.sqrt(pow(self.a, 2) + pow(self.b, 2) + pow(self.c, 2) + pow(self.d, 2))
     
-    def norm_quaternion(self):
+    def norm_q(self):
         '''
-        compute normalized Quaternion object
+        compute normalized Quaternion
         '''
-        return Quaternion(self.a/self.norm(), self.b/self.norm(), self.c/self.norm(), self.d/self.norm())
+        mynorm = self.norm()
+        my_norm_q = Quaternion(self.a/mynorm, self.b/mynorm, self.c/mynorm, self.d/mynorm)
+        return my_norm_q
     
     def conj(self):
         '''
@@ -85,25 +92,32 @@ class Quaternion(object):
         d = -self.d
         return Quaternion(a, b, c, d)
     
-    def rotation(self, alpha, axis):
-        '''compute Quaternion object rotation according to [x, y, z]
-        
-        arguements:
-            alpha -- rotation angle around the x axis, degrees
-            axis -- a list indicates which axi is used, [1, 0, 0] refers to x axis
+    def rotator(theta, vectors):
         '''
-        if alpha%360 == 0:
-            return self
-        else:
-            for i in range(len(axis)):
-                axis[i] = axis[i]*math.sin(alpha*math.pi/360)
-            q = Quaternion(math.cos(alpha*math.pi/360), axis[0], axis[1], axis[2])
-            return q*self*q.conj()
+        from angle and vectors, compute a quaternion
+        
+        arguments:
+            theta -- rotation angle, radians
+            vectors -- indicates rotation aixs, list, like [1, 0, 0]
+        '''
+        
+        # normalize the vector to nearly 1
+        sum_v = sum([ v*v for v in vectors])
+        if abs(sum_v - 1.0) > 0.00000001:
+            norm_v = math.sqrt(sum_v)
+            vectors = [v/norm_v for v in vectors]
+            
+        a = math.cos(theta/2.)
+        b = vectors[0]*math.sin(theta/2.)
+        c = vectors[1]*math.sin(theta/2.)
+        d = vectors[2]*math.sin(theta/2.)
+        
+        return Quaternion(a, b, c, d)
+        
     
     def __str__(self):
         ''' document printing'''
         parameters = {'':self.a, 'i':self.b, 'j':self.c, 'k':self.d}
-        print(parameters)
         count = 0
         w = ''
         for k,v in parameters.items():
