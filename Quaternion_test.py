@@ -47,48 +47,50 @@ print("-------test on conjugate-------")
 E = Quaternion(1.0,2.0,3.0,4.0)
 print(E.conj())
 print("-------test on rotation pricision------")
-num = []
-error = []
-n = 10
-for m in range(100):
-    n = n*n
-    num.append(n)
 
-N = 100
-q1 = Quaternion.rotator(np.pi/(200),[1.0, 0.0, 0.0])
-print(q1)
-q2 = Quaternion.rotator(np.pi/(200),[0.0, 1.0, 0.0])
-print(q2)
-q3 = Quaternion.rotator(np.pi/(200),[0.0, 0.0, 1.0])
-print(q3)
-p = [1.0, 0.0, 0.0]
-p_o = [1.0, 0.0, 0.0]
-for i in range(100):
-    p = q3.mul_vector(p)
-#    print(p)
-#    print('-----------')
-#    p = p.norm_q()
-#    print(p)
-    p = Quaternion(0.0, p[0], p[1], p[2])
-    p = p.norm_q()
-    p = [p.b, p.c, p.d]
+X1 = []
+X2 = []
+MEANDIFF = []
+MINDIFF = []
+MAXDIFF = []
+for N in range (1,30):
+    meandiff=0.
+    maxdiff=0.
+    mindiff=1e9
+    for r in range(0,100):
+        y = random.random()
+        p = Quaternion(0.0, 0.0, y, 0.)
+        p_zero = Quaternion(0.0, 0.0, y, 0.)
+        steps= 180*N
+        for i in range(0,steps):
+            p = p.rotator(np.pi/steps,[1.0, 0.0, 0.0])
+        for i in range(0,steps):
+            p = p.rotator(np.pi/steps,[0.0, 1.0, 0.0])
+        for i in range(0,steps):
+            p = p.rotator(np.pi/steps,[0.0, 0.0, 1.0])               
+        x=(p_zero - p).norm()
+        meandiff+=x
+        mindiff=min(mindiff,x)
+        maxdiff=max(maxdiff,x)
+    X1.append(1.0/N)
+    X2.append(N)
+    MEANDIFF.append(meandiff/100)
+    MINDIFF.append(mindiff)
+    MAXDIFF.append(maxdiff)
 
-for j in range(100):
-    p = q1.mul_vector(p)
-    p = Quaternion(0.0, p[0], p[1], p[2])
-    p = p.norm_q()
-    p = [p.b, p.c, p.d]
-#    p = p.norm_q()
+fig, ax = plt.subplots()
+ax.plot(X1, MEANDIFF, 'k--', label='Mean')
+ax.plot(X1, MINDIFF, 'k:', label='MIN')
+ax.plot(X1, MAXDIFF, 'k', label='MAX')
+ax.set_xlabel("Times")
+ax.set_ylabel("Differences")
+legend = ax.legend(loc=2, bbox_to_anchor=(1.05,1.0),borderaxespad = 0.)
+legend.get_frame().set_facecolor('C0')
+plt.show()
+fig = matplotlib.pyplot.gcf()
+fig.set_size_inches(18.5, 10.5)
+fig.savefig('test2png.png', dpi=100)
 
-for k in range(100):
-    p = q2.mul_vector(p)
-    p = Quaternion(0.0, p[0], p[1], p[2])
-    p = p.norm_q()
-    p = [p.b, p.c, p.d]
-#    p = p.norm_q()
-err = pow(p_o[0]-p[0], 2) + pow(p_o[1]-p[1], 2) + pow(p_o[2]-p[2], 2)
-err = math.sqrt(err)
-error.append(err)
 
 
 

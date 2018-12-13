@@ -55,11 +55,6 @@ class Quaternion(object):
         d = self.d*other.a - self.c*other.b + self.b*other.c + self.a*other.d
         return Quaternion(a, b, c, d)
     
-    def mul_vector(self, v):
-        q = Quaternion(0.0, v[0], v[1], v[2])
-        q = self*q*self.conj()
-        return [q.b, q.c, q.d]
-    
     def dot(self, other):
         '''compute Quaternion objects dot production
         
@@ -92,7 +87,7 @@ class Quaternion(object):
         d = -self.d
         return Quaternion(a, b, c, d)
     
-    def rotator(theta, vectors):
+    def rotator(self, theta, vectors):
         '''
         from angle and vectors, compute a quaternion
         
@@ -103,18 +98,19 @@ class Quaternion(object):
         
         # normalize the vector to nearly 1
         sum_v = sum([ v*v for v in vectors])
-        if abs(sum_v - 1.0) > 0.00000001:
-            norm_v = math.sqrt(sum_v)
-            vectors = [v/norm_v for v in vectors]
+        #if abs(sum_v - 1.0) > 0.00000001:
+        norm_v = math.sqrt(sum_v)
+        vectors = [v/norm_v for v in vectors]
             
         a = math.cos(theta/2.)
         b = vectors[0]*math.sin(theta/2.)
         c = vectors[1]*math.sin(theta/2.)
         d = vectors[2]*math.sin(theta/2.)
         
-        return Quaternion(a, b, c, d)
+        r = Quaternion(a, b, c, d)
         
-    
+        return r*self*r.conj()
+        
     def __str__(self):
         ''' document printing'''
         parameters = {'':self.a, 'i':self.b, 'j':self.c, 'k':self.d}
