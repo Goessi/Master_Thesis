@@ -57,7 +57,7 @@ for N in range (1,30):
     meandiff=0.
     maxdiff=0.
     mindiff=1e9
-    for r in range(0,100):
+    for r in range(0,10000):
         y = random.random()
         p = Quaternion(0.0, 0.0, y, 0.)
         p_zero = Quaternion(0.0, 0.0, y, 0.)
@@ -88,7 +88,7 @@ legend = ax.legend(loc=2, bbox_to_anchor=(1.05,1.0),borderaxespad = 0.)
 legend.get_frame().set_facecolor('C0')
 plt.show()
 fig.set_size_inches(18.5, 10.5)
-fig.savefig('test0.png', dpi=100)
+fig.savefig('test2.png', dpi=100)
 
 
 
