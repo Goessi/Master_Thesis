@@ -43,6 +43,18 @@ class Quaternion(object):
         '''
         return Quaternion(self.a - other.a, self.b - other.b, self.c - other.c, self.d - other.d)
     
+#    def __mul__(self, other):
+#        '''compute Quaternion objects multiple
+#        
+#        arguments:
+#            other -- another Quaternion object
+#        '''
+#        a = self.a*other.a - self.b*other.b - self.c*other.c - self.d*other.d
+#        b = self.b*other.a + self.a*other.b - self.d*other.c - self.c*other.d
+#        c = self.c*other.a + self.d*other.b + self.a*other.c - self.b*other.d
+#        d = self.d*other.a - self.c*other.b + self.b*other.c + self.a*other.d
+#        return Quaternion(a, b, c, d)
+        
     def __mul__(self, other):
         '''compute Quaternion objects multiple
         
@@ -50,9 +62,9 @@ class Quaternion(object):
             other -- another Quaternion object
         '''
         a = self.a*other.a - self.b*other.b - self.c*other.c - self.d*other.d
-        b = self.b*other.a + self.a*other.b - self.d*other.c - self.c*other.d
-        c = self.c*other.a + self.d*other.b + self.a*other.c - self.b*other.d
-        d = self.d*other.a - self.c*other.b + self.b*other.c + self.a*other.d
+        b = self.a*other.b + self.b*other.a + self.c*other.d - self.d*other.c
+        c = self.a*other.c - self.b*other.d + self.c*other.a + self.d*other.b
+        d = self.a*other.d + self.b*other.c - self.c*other.b + self.d*other.a
         return Quaternion(a, b, c, d)
     
     def dot(self, other):

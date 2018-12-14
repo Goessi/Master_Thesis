@@ -79,19 +79,16 @@ for N in range (1,30):
     MAXDIFF.append(maxdiff)
 
 fig, ax = plt.subplots()
-ax.plot(X1, MEANDIFF, 'k--', label='Mean')
-ax.plot(X1, MINDIFF, 'k:', label='MIN')
-ax.plot(X1, MAXDIFF, 'k', label='MAX')
+ax.semilogy(X1, MEANDIFF, 'k--', label='Mean', color = 'red')
+ax.semilogy(X1, MINDIFF, 'k:', label='MIN', color = 'green')
+ax.semilogy(X1, MAXDIFF, 'k', label='MAX', color = 'blue')
 ax.set_xlabel("Times")
 ax.set_ylabel("Differences")
 legend = ax.legend(loc=2, bbox_to_anchor=(1.05,1.0),borderaxespad = 0.)
 legend.get_frame().set_facecolor('C0')
 plt.show()
-fig = matplotlib.pyplot.gcf()
 fig.set_size_inches(18.5, 10.5)
-fig.savefig('test2png.png', dpi=100)
-
-
+fig.savefig('test0.png', dpi=100)
 
 
 
