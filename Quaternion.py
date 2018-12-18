@@ -67,6 +67,19 @@ class Quaternion(object):
         d = self.a*other.d + self.b*other.c - self.c*other.b + self.d*other.a
         return Quaternion(a, b, c, d)
     
+    def scalar_mul(self, scalar):
+        '''compute Quaternion objects multiple
+        
+        arguments:
+            scalar -- a scalar
+        '''
+        a = self.a*scalar
+        b = self.b*scalar
+        c = self.c*scalar
+        d = self.d*scalar
+        
+        return Quaternion(a, b, c, d)
+    
     def dot(self, other):
         '''compute Quaternion objects dot production
         
@@ -122,6 +135,32 @@ class Quaternion(object):
         r = Quaternion(a, b, c, d)
         
         return r*self*r.conj()
+    
+    def toDCM(self):
+        '''
+        compute a Quaternion object to a DCM, a list of lists
+        specifically, a list of three 1*3 list, normalized 
+        '''
+        q0 = self.a
+        q1 = self.b
+        q2 = self.c
+        q3 = self.d
+        
+        C11 = pow(q0, 2) + pow(q1, 2) - pow(q2, 2) - pow(q3, 2)
+        C12 = 2*(q1*q2 + q0*q3)
+        C13 = 2*(q1*q3 - q0*q2)
+        C1_norm = math.sqrt(pow(C11, 2) + pow(C12, 2) + pow(C13, 2))
+        C21 = 2*(q1*q2 - q0*q3)
+        C22 = pow(q0, 2) - pow(q1, 2) + pow(q2, 2) - pow(q3, 2)
+        C23 = 2*(q2*q3 + q0*q1)
+        C2_norm = math.sqrt(pow(C21, 2) + pow(C22, 2) + pow(C23, 2))
+        C31 = 2*(q1*q3 + q0*q2)
+        C32 = 2*(q2*q3 - q0*q1)
+        C33 = pow(q0, 2) - pow(q1, 2) - pow(q2, 2) + pow(q3, 2)
+        C3_norm = math.sqrt(pow(C31, 2) + pow(C32, 2) + pow(C33, 2))
+        
+        return [[C11/C1_norm, C12/C1_norm, C13/C1_norm],[C21/C2_norm, C22/C2_norm, C23/C2_norm],[C31/C3_norm, C32/C3_norm, C33/C3_norm]]
+        
         
     def __str__(self):
         ''' document printing'''
