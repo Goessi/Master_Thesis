@@ -12,3 +12,4 @@
 #### add __sub__, dot(), __mul__, norm(), conj(), rewrite __str__ [date: 06/12/2018]
 #### add rotation test in test.py [date:12/12/2018]
 #### __mul__ Hamilton product, add rotation test in test.py [date: before 18/12/2018]
+#### toDCM(), but a singulary issue happened in reverse [date: 18/12/2018]
