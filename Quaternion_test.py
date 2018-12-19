@@ -102,13 +102,32 @@ D = E.toDCM()
 print(D)
 print("-------test on DCM to Quaternion-------")
 def DCMtoQuaternion(aListOfLists):
-    q0 = 0.5*math.sqrt(aListOfLists[0][0] + aListOfLists[1][1] + aListOfLists[2][2] + 1)
-    q1 = (aListOfLists[1][2] - aListOfLists[2][1])/(4*q0)
-    q2 = (aListOfLists[2][0] - aListOfLists[0][2])/(4*q0)
-    q3 = (aListOfLists[0][1] - aListOfLists[1][0])/(4*q0)
+    q0s = 0.5*math.sqrt(aListOfLists[0][0] + aListOfLists[1][1] + aListOfLists[2][2] + 1)
+    q0x = 0.5*math.sqrt(aListOfLists[0][0] - aListOfLists[1][1] - aListOfLists[2][2] + 1)
+    q0y = 0.5*math.sqrt(-aListOfLists[0][0] + aListOfLists[1][1] - aListOfLists[2][2] + 1)
+    q0z = 0.5*math.sqrt(-aListOfLists[0][0] - aListOfLists[1][1] + aListOfLists[2][2] + 1)
+    max_q = max([q0s, q0x, q0y, q0z])
     
-    return Quaternion(q0, q1, q2, q3)
-
+    if max_q == q0s:
+        qx = (aListOfLists[2][1] - aListOfLists[1][2])/(4*q0s)
+        qy = (aListOfLists[0][2] - aListOfLists[2][0])/(4*q0s)
+        qz = (aListOfLists[1][0] - aListOfLists[0][1])/(4*q0s)
+        return Quaternion(q0s, qx, qy, qz)
+    elif max_q == q0x:
+        qs = (aListOfLists[2][1] - aListOfLists[1][2])/(4*q0x)
+        qy = (aListOfLists[1][0] + aListOfLists[0][1])/(4*q0x)
+        qz = (aListOfLists[0][2] + aListOfLists[2][0])/(4*q0x)
+        return Quaternion(qs, q0x, qy, qz)
+    elif max_q == q0y:
+        qs = (aListOfLists[0][2] - aListOfLists[2][0])/(4*q0y)
+        qx = (aListOfLists[1][0] + aListOfLists[0][1])/(4*q0y)
+        qz = (aListOfLists[2][1] + aListOfLists[1][2])/(4*q0y)
+        return Quaternion(qs, qx, q0y, qz)
+    elif max_q == q0z:
+        qs = (aListOfLists[1][0] - aListOfLists[0][1])/(4*q0z)
+        qx = (aListOfLists[0][2] + aListOfLists[2][0])/(4*q0z)
+        qy = (aListOfLists[2][1] + aListOfLists[1][2])/(4*q0z)
+        return Quaternion(qs, qx, qy, q0z)
 print(DCMtoQuaternion(D))
 
 
