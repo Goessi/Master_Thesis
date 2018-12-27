@@ -13,3 +13,4 @@
 #### add rotation test in test.py [date:12/12/2018]
 #### __mul__ Hamilton product, add rotation test in test.py [date: before 18/12/2018]
 #### toDCM(), but a singulary issue happened in reverse [date: 18/12/2018]
+#### add DCM rotation pricision in test.py [date: 27/12/2018]
