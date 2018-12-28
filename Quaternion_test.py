@@ -53,49 +53,49 @@ print(E.norm())
 print("-------test on conjugate-------")
 E = Quaternion(1.0, 2.0, 3.0, 4.0)
 print(E.conj())
-#print("-------test on rotation pricision------")
-#
-#X1 = []
-#X2 = []
-#MEANDIFF = []
-#MINDIFF = []
-#MAXDIFF = []
-#for N in range (1,30):
-#    meandiff = 0.0
-#    maxdiff = 0.0
-#    mindiff = 1e9
-#    for r in range(0,100):
-#        y = random.random()
-#        p = Quaternion(0.0, 0.0, y, 0.0)
-#        p_zero = Quaternion(0.0, 0.0, y, 0.0)
-#        steps= 180*N
-#        for i in range(0,steps):
-#            p = p.rotator(np.pi / steps,[1.0, 0.0, 0.0])
-#        for i in range(0,steps):
-#            p = p.rotator(np.pi / steps,[0.0, 1.0, 0.0])
-#        for i in range(0,steps):
-#            p = p.rotator(np.pi / steps,[0.0, 0.0, 1.0])               
-#        x=(p_zero - p).norm()
-#        meandiff+=x
-#        mindiff=min(mindiff,x)
-#        maxdiff=max(maxdiff,x)
-#    X1.append(1.0 / N)
-#    X2.append(N)
-#    MEANDIFF.append(meandiff / 100) # remember to change according to different times
-#    MINDIFF.append(mindiff)
-#    MAXDIFF.append(maxdiff)
-#
-#fig, ax = plt.subplots()
-#ax.semilogy(X1, MEANDIFF, 'k--', label='Mean', color = 'red')
-#ax.semilogy(X1, MINDIFF, 'k:', label='MIN', color = 'green')
-#ax.semilogy(X1, MAXDIFF, 'k', label='MAX', color = 'blue')
-#ax.set_xlabel("Times")
-#ax.set_ylabel("Differences")
-#legend = ax.legend(loc=2, bbox_to_anchor=(1.05,1.0),borderaxespad = 0.)
-#legend.get_frame().set_facecolor('C0')
-#plt.show()
-#fig.set_size_inches(18.5, 10.5)
-#fig.savefig('test2.png', dpi=100)
+print("-------test on rotation pricision------")
+X1 = []
+X2 = []
+MEANDIFF = []
+MINDIFF = []
+MAXDIFF = []
+for N in range (1,30):
+    meandiff = 0.0
+    maxdiff = 0.0
+    mindiff = 1e9
+    for r in range(0,100):
+        y = random.random()
+        p = Quaternion(0.0, 0.0, y, 0.0)
+        p_zero = Quaternion(0.0, 0.0, y, 0.0)
+        steps= 180 * N
+        for i in range(0, steps):
+            p = p.rotator(np.pi / steps,[1.0, 0.0, 0.0])
+        for i in range(0, steps):
+            p = p.rotator(np.pi / steps,[0.0, 1.0, 0.0])
+        for i in range(0, steps):
+            p = p.rotator(np.pi / steps,[0.0, 0.0, 1.0])               
+        x = (p_zero - p).norm()
+        meandiff += x
+        mindiff = min(mindiff, x)
+        maxdiff = max(maxdiff, x)
+    X1.append(1.0 / N)
+    X2.append(N)
+    MEANDIFF.append(meandiff / 100) # remember to change according to different times
+    MINDIFF.append(mindiff)
+    MAXDIFF.append(maxdiff)
+
+fig, ax = plt.subplots()
+ax.semilogy(X1, MEANDIFF, 'k--', label='Mean', color = 'red')
+ax.semilogy(X1, MINDIFF, 'k:', label='MIN', color = 'green')
+ax.semilogy(X1, MAXDIFF, 'k', label='MAX', color = 'blue')
+ax.set_xlabel("Times")
+ax.set_ylabel("Differences")
+ax.set_title("Differences in 1000 steps, 30 rounds")
+legend = ax.legend(loc=2, bbox_to_anchor=(1.05,1.0),borderaxespad = 0.)
+legend.get_frame().set_facecolor('C0')
+plt.show()
+fig.set_size_inches(18.5, 10.5)
+fig.savefig('test_Quaternion_100.png', dpi=100)
 print("-------test on toDCM-------")
 E = Quaternion(0.0, 1.0, 1.0, 1.0)
 D = E.toDCM()
@@ -161,15 +161,6 @@ def computeDCM(theta, vectors):
     DCM[2][2] = cosTheta + pow(f3, 2) * (1 - cosTheta)
     return DCM
 
-def vectorMatrixMul(vector, matrix):
-    outputVector = []
-    for i in range(len(vector)):
-        sumOfElement = 0
-        for j in range(len(matrix)):
-            sumOfElement = sumOfElement + vector[i] * matrix[j][i]
-        outputVector.append(sumOfElement)
-    return outputVector
-
 X1 = []
 X2 = []
 MEANDIFF = []
@@ -179,43 +170,47 @@ for N in range (1,30):
     meandiff = 0.0
     maxdiff = 0.0
     mindiff = 1e9
-    for r in range(0,1000):
+    for r in range(0, 1000):
         x = random.random()
         y = random.random()
         z = random.random()
         v = [x, y, z]
-        v_zero = [x , y, z]
-        steps= 180*N
-        DCM1 = computeDCM(np.pi / steps, [1.0, 0.0, 0.0])
+        v_zero = [x, y, z]
+        steps= 180 * N
+        m1 = computeDCM(np.pi/ steps, [1, 0, 0])
+        m2 = computeDCM(np.pi/ steps, [0, 1, 0])
+        m3 = computeDCM(np.pi/ steps, [0, 0, 1])
         for i in range(0, steps):
-            v = vectorMatrixMul(v, DCM1)
-        DCM2 = computeDCM(np.pi / steps, [0.0, 1.0, 0.0])
-        for i in range(0, steps):
-            v = vectorMatrixMul(v, DCM2)
-        DCM3 = computeDCM(np.pi / steps, [0.0, 0.0, 1.0])
-        for i in range(0, steps):
-            v = vectorMatrixMul(v, DCM3)          
+            v = np.dot(m1, v)
+        for j in range(0, steps):
+            v = np.dot(m2, v)
+        for k in range(0, steps):
+            v = np.dot(m3, v)              
         x = math.sqrt(pow(v[0] - v_zero[0], 2) + pow(v[1] - v_zero[1], 2) + pow(v[2] - v_zero[2], 2))
         meandiff += x
         mindiff = min(mindiff, x)
         maxdiff = max(maxdiff, x)
     X1.append(1.0 / N)
     X2.append(N)
-    MEANDIFF.append(meandiff / 1000)
+    MEANDIFF.append(meandiff / 1000) # remember to change according to different times
     MINDIFF.append(mindiff)
     MAXDIFF.append(maxdiff)
-    
+
 fig, ax = plt.subplots()
 ax.semilogy(X1, MEANDIFF, 'k--', label='Mean', color = 'red')
 ax.semilogy(X1, MINDIFF, 'k:', label='MIN', color = 'green')
 ax.semilogy(X1, MAXDIFF, 'k', label='MAX', color = 'blue')
 ax.set_xlabel("Times")
-ax.set_ylabel("Differences in DCM")
+ax.set_ylabel("Differences")
+ax.set_title("Differences in 1000 steps, 30 rounds")
 legend = ax.legend(loc=2, bbox_to_anchor=(1.05,1.0),borderaxespad = 0.)
 legend.get_frame().set_facecolor('C0')
 plt.show()
 fig.set_size_inches(18.5, 10.5)
-fig.savefig('test_DCM.png', dpi=100)
+fig.savefig('test_DCM_1000.png', dpi=100)
+
+
+
 
 
 
