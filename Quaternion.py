@@ -20,7 +20,7 @@ class Quaternion(object):
     """    
     def __init__(self, a, b, c, d):
         '''initial Quaternion class with 4 floats'''
-        assert type(a) == float and type(b) == float and type(c) == float and type(d) == float
+        #assert type(a) == float and type(b) == float and type(c) == float and type(d) == float
         
         self.a = a
         self.b = b
