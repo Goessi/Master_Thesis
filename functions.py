@@ -8,7 +8,7 @@ import math
 import random
 import numpy as np
 from Quaternion import Quaternion
-import time
+import timeit
 
 def computeDCM(theta, vectors):
     '''
@@ -89,11 +89,12 @@ def Quaternion_rotation_precision(N, R, x_theta, y_theta, z_theta):
     MINDIFF = []
     MAXDIFF = []
     TIME = []
-    aTime = time.clock()
+    
     for n in range (1,N):
         meandiff = 0.0
         maxdiff = 0.0
         mindiff = 1e9
+        time = 0
         for r in range(0,R):
             x = random.random()
             y = random.random()
@@ -101,18 +102,20 @@ def Quaternion_rotation_precision(N, R, x_theta, y_theta, z_theta):
             p = Quaternion(0.0, x, y, z)
             p_zero = Quaternion(0.0, x, y, z)
             steps = n
+            aTime = timeit.default_timer()
             for i in range(0, steps):
                 p = p.rotator(x_theta / steps, [1.0, 0.0, 0.0])
             for j in range(0, steps):
                 p = p.rotator(y_theta / steps, [0.0, 1.0, 0.0])
             for k in range(0, steps):
-                p = p.rotator(z_theta / steps, [0.0, 0.0, 1.0])               
+                p = p.rotator(z_theta / steps, [0.0, 0.0, 1.0])  
+            bTime = timeit.default_timer()
+            time += (bTime - aTime) / (3 * n)
             diff = (p_zero - p).norm()
             meandiff += diff
             mindiff = min(mindiff, diff)
-            maxdiff = max(maxdiff, diff)
-        bTime = time.clock()
-        TIME.append((bTime - aTime) / (R * n))
+            maxdiff = max(maxdiff, diff)        
+        TIME.append(time / R)
         X1.append(1.0 / n)
         X2.append(n)
         MEANDIFF.append(meandiff / R)
@@ -139,11 +142,12 @@ def DCM_rotation_precision(N, R, x_theta, y_theta, z_theta):
     MINDIFF = []
     MAXDIFF = []
     TIME = []
-    aTime = time.clock()
+    
     for n in range (1,N):
         meandiff = 0.0
         maxdiff = 0.0
         mindiff = 1e9
+        time = 0
         for r in range(0, R):
             x = random.random()
             y = random.random()
@@ -154,18 +158,20 @@ def DCM_rotation_precision(N, R, x_theta, y_theta, z_theta):
             m1 = computeDCM(x_theta / steps, [1, 0, 0])
             m2 = computeDCM(y_theta / steps, [0, 1, 0])
             m3 = computeDCM(z_theta / steps, [0, 0, 1])
+            aTime = timeit.default_timer()
             for i in range(0, steps):
                 v = np.dot(m1, v)
             for j in range(0, steps):
                 v = np.dot(m2, v)
             for k in range(0, steps):
-                v = np.dot(m3, v)              
+                v = np.dot(m3, v)   
+            bTime = timeit.default_timer()
+            time += (bTime - aTime) / (3 * n)
             diff = math.sqrt(pow(v[0] - v_zero[0], 2) + pow(v[1] - v_zero[1], 2) + pow(v[2] - v_zero[2], 2))
             meandiff += diff
             mindiff = min(mindiff, diff)
-            maxdiff = max(maxdiff, diff)
-        bTime = time.clock()
-        TIME.append((bTime - aTime) / (n * R))
+            maxdiff = max(maxdiff, diff)        
+        TIME.append(time / R)
         X1.append(1.0 / n)
         X2.append(n)
         MEANDIFF.append(meandiff / R)
