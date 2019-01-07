@@ -14,13 +14,14 @@ class Quaternion(object):
     """class of Quaternion that do the simple operations
     
     Attributes:
-        a: a float parameter of real part
-        b: a float parameter of fundamental quaternion unit i
-        c: a float parameter of fundamental quaternion unit j
-        d: a float parameter of fundamental quaternion unit k
+        a -- a float parameter of real part
+        b -- a float parameter of fundamental quaternion unit i
+        c -- a float parameter of fundamental quaternion unit j
+        d -- a float parameter of fundamental quaternion unit k
     """    
     def __init__(self, a, b, c, d):
         '''initial Quaternion class with 4 floats'''
+        #assert
         
         self.a = a
         self.b = b
