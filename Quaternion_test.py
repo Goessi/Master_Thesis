@@ -231,7 +231,7 @@ plt.show()
 fig.set_size_inches(18.5, 10.5)
 fig.savefig('DCM_Quaternion_ed.png', dpi = 100)
 
-(X1, X2, DIFF_CHECK_Q, DIFF_CHECK_DCM) = f.DCM_Quaternion_rotator_check3(300, 100, np.pi, np.pi, np.pi)
+(X1, X2, DIFF_CHECK_Q, DIFF_CHECK_DCM) = f.DCM_Quaternion_rotator_check3(300, 100, np.pi / 2, np.pi / 2, np.pi / 2)
 
 fig, ax = plt.subplots()
 ax.plot(X2, DIFF_CHECK_Q, 'o', label = 'Quaternion', color = 'red')

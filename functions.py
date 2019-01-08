@@ -406,18 +406,23 @@ def DCM_Quaternion_rotator_check2(N, R, x_theta, y_theta, z_theta):
             m1 = computeDCM(x_theta / steps, [1, 0, 0])
             m2 = computeDCM(y_theta / steps, [0, 1, 0])
             m3 = computeDCM(z_theta / steps, [0, 0, 1])
+            m4 = computeDCM(-y_theta / steps, [0, 1, 0])
             q1 = Quaternion(math.cos(x_theta / (2 * steps)), math.sin(x_theta / (2 * steps)), 0, 0).norm_q()
             q2 = Quaternion(math.cos(y_theta / (2 * steps)), 0, math.sin(y_theta / (2 * steps)), 0).norm_q()
             q3 = Quaternion(math.cos(z_theta / (2 * steps)), 0, 0, math.sin(z_theta / (2 * steps))).norm_q()
+            q4 = Quaternion(math.cos(-y_theta / (2 * steps)), 0, math.sin(-y_theta / (2 * steps)), 0).norm_q()
             for i in range(0, steps):
-                DCM = m1 @ DCM
+                DCM = DCM @ m1
                 Q = (q1 * Q).norm_q()
             for j in range(0, steps):
-                DCM = m2 @ DCM
+                DCM = DCM @ m2
                 Q = (q2 * Q).norm_q()
             for k in range(0, steps):
-                DCM = m3 @ DCM
+                DCM = DCM @ m3
                 Q = (q3 * Q).norm_q()
+            for k in range(0, steps):
+                DCM = DCM @ m4
+                Q = (q4 * Q).norm_q()
             Q = Q.toDCM();
             diff_chk_q += DCM_check(Q, DCM_zero)
             diff_chk_dcm += DCM_check(DCM, DCM_zero)
@@ -501,18 +506,23 @@ def DCM_Quaternion_rotator_check3(N, R, x_theta, y_theta, z_theta):
             m1 = computeDCM(x_theta / steps, [1, 0, 0])
             m2 = computeDCM(y_theta / steps, [0, 1, 0])
             m3 = computeDCM(z_theta / steps, [0, 0, 1])
+            m4 = computeDCM(-y_theta / steps, [0, 1, 0])
             q1 = Quaternion(math.cos(x_theta / (2 * steps)), math.sin(x_theta / (2 * steps)), 0, 0).norm_q()
             q2 = Quaternion(math.cos(y_theta / (2 * steps)), 0, math.sin(y_theta / (2 * steps)), 0).norm_q()
             q3 = Quaternion(math.cos(z_theta / (2 * steps)), 0, 0, math.sin(z_theta / (2 * steps))).norm_q()
+            q4 = Quaternion(math.cos(-y_theta / (2 * steps)), 0, math.sin(-y_theta / (2 * steps)), 0).norm_q()
             for i in range(0, steps):
-                DCM = m1 @ DCM
+                DCM = DCM @ m1
                 Q = (q1 * Q).norm_q()
             for j in range(0, steps):
-                DCM = m2 @ DCM
+                DCM = DCM @ m2
                 Q = (q2 * Q).norm_q()
             for k in range(0, steps):
-                DCM = m3 @ DCM
+                DCM = DCM @ m3
                 Q = (q3 * Q).norm_q()
+            for q in range(0, steps):
+                DCM = DCM @ m4
+                Q = (q4 * Q).norm_q()
             diff_chk_q += extracAngleQuaternion(Q, x, y, z)
             diff_chk_dcm += extracAngleDCM(DCM, x, y, z)
         X1.append(1.0 / n)
