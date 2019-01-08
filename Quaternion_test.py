@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 from Quaternion import Quaternion
 import functions as f
 import numpy as np
-
+import decimal as d
 print("-------test on addition operation-------")
 A = Quaternion(-1.0, 2.0, 3.0, 4.0)
 B = Quaternion(5.0, 6.0, 7.0, 8.0)
@@ -21,7 +21,7 @@ print(B)
 print(C)
 
 print("-------test on subtraction operation-------")
-E = Quaternion(1.0, 2.0, 3.0, 4.0)
+E = Quaternion(1.3, 2.0, 3.0, 4.0)
 F = Quaternion(-2.0, 6.0, 7.0, 8.0)
 G = E - F
 print(E)
@@ -29,7 +29,7 @@ print(F)
 print(G)
 
 print("-------test on dot production-------")
-E = Quaternion(1.0, 2.0, 3.0, 4.0)
+E = Quaternion(1.1, 2.0, 3.0, 4.0)
 F = Quaternion(-2.0, 6.0, 7.0, 8.0)
 G = E.dot(F)
 print(E)
@@ -39,7 +39,7 @@ print(G)
 print("-------test on multiply-------")
 E = Quaternion(1.0, 2.0, 3.0, 4.0)
 F = Quaternion(-2.0, 6.0, 7.0, 8.0)
-G = E*F
+G = E * F
 print(E)
 print(F)
 print(G)
