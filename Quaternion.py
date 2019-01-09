@@ -146,7 +146,7 @@ class Quaternion(object):
         C3_norm = math.sqrt(pow(C31, 2) + pow(C32, 2) + pow(C33, 2))
         C1_norm = math.sqrt(pow(C11, 2) + pow(C12, 2) + pow(C13, 2))
         C2_norm = math.sqrt(pow(C21, 2) + pow(C22, 2) + pow(C23, 2))
-        DCM = [[C11/C1_norm, C12/C1_norm, C13/C1_norm],[C21/C2_norm, C22/C2_norm, C23/C2_norm],[C31/C3_norm, C32/C3_norm, C33/C3_norm]]
+        DCM = [[C11 / C1_norm, C12 / C1_norm, C13 / C1_norm],[C21 / C2_norm, C22 / C2_norm, C23 / C2_norm],[C31 / C3_norm, C32 / C3_norm, C33 / C3_norm]]
         return np.array(DCM)
         
         
