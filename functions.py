@@ -276,18 +276,18 @@ def Quaternion_DCM_rotation_precision(N, R, x_theta, y_theta, z_theta):
         MAXDIFF_DCM.append(maxdiff_DCM)
     return X1, X2, MEANDIFF_Q, MINDIFF_Q, MAXDIFF_Q, MEANDIFF_DCM, MINDIFF_Q, MAXDIFF_Q
 
-def DCM_diagonal_check(aDCM):
+def DCM_diagonal_check(aDCM, bDCM):
     '''
     calculate differences  between aDCM disgonal and ones, mean of euclidean distance 
     '''
-    diff = (math.sqrt(pow(aDCM[0][0] - 1, 2) + pow(aDCM[1][1] - 1, 2) + pow(aDCM[2][2] - 1, 2))) / 3
+    diff = (aDCM[0][0] + aDCM[1][1] + aDCM[2][2] - bDCM[0][0] - bDCM[1][1] - bDCM[2][2]) / 3
     return diff
 
-def DCM_off_diagonal_check(aDCM):
+def DCM_off_diagonal_check(aDCM, bDCM):
     '''
     calculate differences between aDCM off-diagonal and zeros
     '''
-    diff = math.sqrt(pow(aDCM[0][1], 2) + pow(aDCM[0][2], 2) + pow(aDCM[1][0], 2) + pow(aDCM[1][2], 2) + pow(aDCM[2][0], 2) + pow(aDCM[2][1], 2)) / 6
+    diff = (aDCM[0][1] + aDCM[0][2] + aDCM[1][0] + aDCM[1][2] + aDCM[2][0] + aDCM[2][1]- (bDCM[0][1] + bDCM[0][2] + bDCM[1][0] + bDCM[1][2] + bDCM[2][0] + bDCM[2][1])) / 6
     return diff
 
 def DCM_orthonormality_check(aDCM, direction):
@@ -299,15 +299,15 @@ def DCM_orthonormality_check(aDCM, direction):
         direction: define if columns or rows in calculation, 0 is columns product, 1 is rows product'
     '''
     if direction == 0:
-        dot_product01 = [aDCM[0][0] * aDCM[0][1], aDCM[1][0] * aDCM[1][1], aDCM[2][0] * aDCM[2][1]]
-        dot_product12 = [aDCM[0][1] * aDCM[0][2], aDCM[1][1] * aDCM[1][2], aDCM[2][1] * aDCM[2][2]]
-        dot_product02 = [aDCM[0][0] * aDCM[0][2], aDCM[1][0] * aDCM[1][2], aDCM[2][0] * aDCM[2][2]]
+        dot_product01 = aDCM[0][0] * aDCM[0][1] + aDCM[1][0] * aDCM[1][1] + aDCM[2][0] * aDCM[2][1]
+        dot_product12 = aDCM[0][1] * aDCM[0][2] + aDCM[1][1] * aDCM[1][2] + aDCM[2][1] * aDCM[2][2]
+        dot_product02 = aDCM[0][0] * aDCM[0][2] + aDCM[1][0] * aDCM[1][2] + aDCM[2][0] * aDCM[2][2]
     if direction == 1:
-        dot_product01 = [aDCM[0][0] * aDCM[1][0], aDCM[0][1] * aDCM[1][1], aDCM[0][2] * aDCM[1][2]]
-        dot_product12 = [aDCM[1][0] * aDCM[2][0], aDCM[1][1] * aDCM[2][1], aDCM[1][2] * aDCM[2][2]]
-        dot_product02 = [aDCM[0][0] * aDCM[2][0], aDCM[0][1] * aDCM[2][1], aDCM[0][2] * aDCM[2][2]]
-    
-    L = math.sqrt(pow(dot_product01[0], 2) + pow(dot_product01[1], 2) + pow(dot_product01[2], 2)) + math.sqrt(pow(dot_product12[0], 2) + pow(dot_product12[1], 2) + pow(dot_product12[2], 2)) + math.sqrt(pow(dot_product02[0], 2) + pow(dot_product02[1], 2) + pow(dot_product02[2], 2))
+        dot_product01 = aDCM[0][0] * aDCM[1][0] + aDCM[0][1] * aDCM[1][1] + aDCM[0][2] * aDCM[1][2]
+        dot_product12 = aDCM[1][0] * aDCM[2][0] + aDCM[1][1] * aDCM[2][1] + aDCM[1][2] * aDCM[2][2]
+        dot_product02 = aDCM[0][0] * aDCM[2][0] + aDCM[0][1] * aDCM[2][1] + aDCM[0][2] * aDCM[2][2]
+        
+    L = math.sqrt(pow(dot_product01, 2) + pow(dot_product12, 2) + pow(dot_product02, 2))
     return L
 
 def DCM_Quaternion_rotator_check(N, R, x_theta, y_theta, z_theta):
@@ -352,30 +352,43 @@ def DCM_Quaternion_rotator_check(N, R, x_theta, y_theta, z_theta):
 #            
 #            DCM = m3 @ m2 @ m1
             DCM = computeDCM_angle(x, y ,z)
+            DCM_zero = computeDCM_angle(x, y ,z)
+            print(DCM)
             Q = DCMtoQuaternion(DCM)
+            Q_zero = DCMtoQuaternion(DCM_zero)
+            print(Q_zero)
             steps = n
             m1 = computeDCM(x_theta / steps, [1, 0, 0])
             m2 = computeDCM(y_theta / steps, [0, 1, 0])
             m3 = computeDCM(z_theta / steps, [0, 0, 1])
+            m4 = computeDCM(-y_theta / steps, [0, 1, 0])
             q1 = Quaternion(math.cos(x_theta / (2 * steps)), math.sin(x_theta / (2 * steps)), 0, 0).norm_q()
             q2 = Quaternion(math.cos(x_theta / (2 * steps)), 0, math.sin(x_theta / (2 * steps)), 0).norm_q()
             q3 = Quaternion(math.cos(x_theta / (2 * steps)), 0, 0, math.sin(x_theta / (2 * steps))).norm_q()
+            q4 = Quaternion(math.cos(-y_theta / (2 * steps)), 0, math.sin(-y_theta / (2 * steps)), 0).norm_q()
             for i in range(0, steps):
-                DCM = m1 @ DCM
+                DCM = DCM @ m1
                 Q = (q1 * Q).norm_q()
             for j in range(0, steps):
-                DCM = m2 @ DCM
+                DCM = DCM @ m2
                 Q = (q2 * Q).norm_q()
             for k in range(0, steps):
-                DCM = m3 @ DCM
+                DCM = DCM @ m3
                 Q = (q3 * Q).norm_q()
+            for k in range(0, steps):
+                DCM = DCM @ m4
+                Q = (q4 * Q).norm_q()
             Q = Q.toDCM()
-            diagonal_check_q += DCM_diagonal_check(Q)
-            off_diagonal_check_q += DCM_off_diagonal_check(Q)
+            Q_zero = Q_zero.toDCM()
+            print("------------------")
+            print(DCM)
+            print(Q)
+            diagonal_check_q += DCM_diagonal_check(Q, Q_zero)
+            off_diagonal_check_q += DCM_off_diagonal_check(Q, Q_zero)
             orthonormality_col_q += DCM_orthonormality_check(Q, 0)
             orthonormality_row_q += DCM_orthonormality_check(Q, 1)
-            diagonal_check_dcm += DCM_diagonal_check(DCM)
-            off_diagonal_check_dcm += DCM_off_diagonal_check(DCM)
+            diagonal_check_dcm += DCM_diagonal_check(DCM, DCM_zero)
+            off_diagonal_check_dcm += DCM_off_diagonal_check(DCM, DCM_zero)
             orthonormality_col_dcm += DCM_orthonormality_check(DCM, 0)
             orthonormality_row_dcm += DCM_orthonormality_check(DCM, 1)
         X1.append(1.0 / n)
