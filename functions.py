@@ -119,6 +119,7 @@ def Quaternion_rotation_precision(N, R, x_theta, y_theta, z_theta):
     MINDIFF = []
     MAXDIFF = []
     TIME = []
+    CONST = (x_theta + y_theta + z_theta) * 180 / np.pi
     
     for n in range (1,N):
         meandiff = 0.0
@@ -146,8 +147,9 @@ def Quaternion_rotation_precision(N, R, x_theta, y_theta, z_theta):
             mindiff = min(mindiff, diff)
             maxdiff = max(maxdiff, diff)        
         TIME.append(time / R)
-        X1.append(1.0 / n)
-        X2.append(n)
+        CONST1 = n * R
+        X1.append(1.0 / (CONST1 * CONST))
+        X2.append(CONST1)
         MEANDIFF.append(meandiff / R)
         MINDIFF.append(mindiff)
         MAXDIFF.append(maxdiff)
@@ -172,6 +174,7 @@ def DCM_rotation_precision(N, R, x_theta, y_theta, z_theta):
     MINDIFF = []
     MAXDIFF = []
     TIME = []
+    CONST = (x_theta + y_theta + z_theta) * 180 / np.pi
     
     for n in range (1,N):
         meandiff = 0.0
@@ -202,8 +205,9 @@ def DCM_rotation_precision(N, R, x_theta, y_theta, z_theta):
             mindiff = min(mindiff, diff)
             maxdiff = max(maxdiff, diff)        
         TIME.append(time / R)
-        X1.append(1.0 / n)
-        X2.append(n)
+        CONST1 = n * R
+        X1.append(1.0 / (CONST1 * CONST))
+        X2.append(CONST1)
         MEANDIFF.append(meandiff / R)
         MINDIFF.append(mindiff)
         MAXDIFF.append(maxdiff)
@@ -229,6 +233,7 @@ def Quaternion_DCM_rotation_precision(N, R, x_theta, y_theta, z_theta):
     MEANDIFF_DCM = []
     MINDIFF_DCM = []
     MAXDIFF_DCM = []
+    CONST = (x_theta + y_theta + z_theta) * 180 / np.pi
     
     for n in range (1,N):
         meandiff_Q = 0.0
@@ -266,8 +271,9 @@ def Quaternion_DCM_rotation_precision(N, R, x_theta, y_theta, z_theta):
             meandiff_DCM += x_DCM
             mindiff_DCM = min(mindiff_DCM, x_DCM)
             maxdiff_DCM = max(maxdiff_DCM, x_DCM)
-        X1.append(1.0 / n)
-        X2.append(n)
+        CONST1 = n * R
+        X1.append(1.0 / (CONST1 * CONST))
+        X2.append(CONST1)
         MEANDIFF_Q.append(meandiff_Q / R)
         MINDIFF_Q.append(mindiff_Q)
         MAXDIFF_Q.append(maxdiff_Q)
@@ -290,27 +296,7 @@ def DCM_off_diagonal_check(aDCM, bDCM):
     diff = (aDCM[0][1] + aDCM[0][2] + aDCM[1][0] + aDCM[1][2] + aDCM[2][0] + aDCM[2][1]- (bDCM[0][1] + bDCM[0][2] + bDCM[1][0] + bDCM[1][2] + bDCM[2][0] + bDCM[2][1])) / 6
     return diff
 
-def DCM_orthonormality_check(aDCM, direction):
-    '''
-    calculate differences between columns dot products or rows dot products
-    
-    arguments:
-        aDCM: a 3*3 rotation matrix
-        direction: define if columns or rows in calculation, 0 is columns product, 1 is rows product'
-    '''
-    if direction == 0:
-        dot_product01 = aDCM[0][0] * aDCM[0][1] + aDCM[1][0] * aDCM[1][1] + aDCM[2][0] * aDCM[2][1]
-        dot_product12 = aDCM[0][1] * aDCM[0][2] + aDCM[1][1] * aDCM[1][2] + aDCM[2][1] * aDCM[2][2]
-        dot_product02 = aDCM[0][0] * aDCM[0][2] + aDCM[1][0] * aDCM[1][2] + aDCM[2][0] * aDCM[2][2]
-    if direction == 1:
-        dot_product01 = aDCM[0][0] * aDCM[1][0] + aDCM[0][1] * aDCM[1][1] + aDCM[0][2] * aDCM[1][2]
-        dot_product12 = aDCM[1][0] * aDCM[2][0] + aDCM[1][1] * aDCM[2][1] + aDCM[1][2] * aDCM[2][2]
-        dot_product02 = aDCM[0][0] * aDCM[2][0] + aDCM[0][1] * aDCM[2][1] + aDCM[0][2] * aDCM[2][2]
-        
-    L = math.sqrt(pow(dot_product01, 2) + pow(dot_product12, 2) + pow(dot_product02, 2))
-    return L
-
-def DCM_Quaternion_rotator_check(N, R, x_theta, y_theta, z_theta):
+def DCM_Quaternion_rotator_check0(N, R, x_theta, y_theta, z_theta):
     '''
     calculate how many differences from rotation operator after rotation
     
@@ -325,38 +311,25 @@ def DCM_Quaternion_rotator_check(N, R, x_theta, y_theta, z_theta):
     X2 = []
     DIAGONAL_CHECK_Q = []
     OFF_DIAGONAL_CHECK_Q = []
-    ORTHONORMALITY_COL_Q = []
-    ORTHONORMALITY_ROW_Q = []
     DIAGONAL_CHECK_DCM = []
     OFF_DIAGONAL_CHECK_DCM = []
-    ORTHONORMALITY_COL_DCM = []
-    ORTHONORMALITY_ROW_DCM = []
+    CONST = (x_theta + y_theta + z_theta) * 180 / np.pi
     
-    for n in range (1,N):
+    for n in range (1, N):
         diagonal_check_q = 0
         off_diagonal_check_q = 0
-        orthonormality_col_q = 0
-        orthonormality_row_q = 0
         diagonal_check_dcm = 0
         off_diagonal_check_dcm = 0
-        orthonormality_col_dcm = 0
-        orthonormality_row_dcm = 0
-        for r in range(0,R):
+        
+        for r in range(0, R):
             x = random.random()
             y = random.random()
             z = random.random()
             
-#            m1 = computeDCM(x, [1, 0, 0])
-#            m2 = computeDCM(y, [0, 1, 0])
-#            m3 = computeDCM(z, [0, 0, 1])
-#            
-#            DCM = m3 @ m2 @ m1
             DCM = computeDCM_angle(x, y ,z)
             DCM_zero = computeDCM_angle(x, y ,z)
-            print(DCM)
             Q = DCMtoQuaternion(DCM)
             Q_zero = DCMtoQuaternion(DCM_zero)
-            print(Q_zero)
             steps = n
             m1 = computeDCM(x_theta / steps, [1, 0, 0])
             m2 = computeDCM(y_theta / steps, [0, 1, 0])
@@ -380,29 +353,108 @@ def DCM_Quaternion_rotator_check(N, R, x_theta, y_theta, z_theta):
                 Q = (q4 * Q).norm_q()
             Q = Q.toDCM()
             Q_zero = Q_zero.toDCM()
-            print("------------------")
-            print(DCM)
-            print(Q)
             diagonal_check_q += DCM_diagonal_check(Q, Q_zero)
             off_diagonal_check_q += DCM_off_diagonal_check(Q, Q_zero)
-            orthonormality_col_q += DCM_orthonormality_check(Q, 0)
-            orthonormality_row_q += DCM_orthonormality_check(Q, 1)
             diagonal_check_dcm += DCM_diagonal_check(DCM, DCM_zero)
             off_diagonal_check_dcm += DCM_off_diagonal_check(DCM, DCM_zero)
-            orthonormality_col_dcm += DCM_orthonormality_check(DCM, 0)
-            orthonormality_row_dcm += DCM_orthonormality_check(DCM, 1)
-        X1.append(1.0 / n)
-        X2.append(n)
+        CONST1 = n * R
+        X1.append(1.0 / (CONST1 * CONST))
+        X2.append(CONST1)
         DIAGONAL_CHECK_Q.append(diagonal_check_q / R)
         OFF_DIAGONAL_CHECK_Q.append(off_diagonal_check_q / R)
-        ORTHONORMALITY_COL_Q.append(orthonormality_col_q / R)
-        ORTHONORMALITY_ROW_Q.append(orthonormality_row_q / R)
         DIAGONAL_CHECK_DCM.append(diagonal_check_dcm / R)
         OFF_DIAGONAL_CHECK_DCM.append(off_diagonal_check_dcm / R)
+    return X1, X2, DIAGONAL_CHECK_Q, OFF_DIAGONAL_CHECK_Q, DIAGONAL_CHECK_DCM, OFF_DIAGONAL_CHECK_DCM
+
+def DCM_orthonormality_check(aDCM, direction):
+    '''
+    calculate differences between columns dot products or rows dot products
+    
+    arguments:
+        aDCM: a 3*3 rotation matrix
+        direction: define if columns or rows in calculation, 0 is columns product, 1 is rows product'
+    '''
+    if direction == 0:
+        dot_product01 = aDCM[0][0] * aDCM[0][1] + aDCM[1][0] * aDCM[1][1] + aDCM[2][0] * aDCM[2][1]
+        dot_product12 = aDCM[0][1] * aDCM[0][2] + aDCM[1][1] * aDCM[1][2] + aDCM[2][1] * aDCM[2][2]
+        dot_product02 = aDCM[0][0] * aDCM[0][2] + aDCM[1][0] * aDCM[1][2] + aDCM[2][0] * aDCM[2][2]
+    if direction == 1:
+        dot_product01 = aDCM[0][0] * aDCM[1][0] + aDCM[0][1] * aDCM[1][1] + aDCM[0][2] * aDCM[1][2]
+        dot_product12 = aDCM[1][0] * aDCM[2][0] + aDCM[1][1] * aDCM[2][1] + aDCM[1][2] * aDCM[2][2]
+        dot_product02 = aDCM[0][0] * aDCM[2][0] + aDCM[0][1] * aDCM[2][1] + aDCM[0][2] * aDCM[2][2]
+        
+    L = math.sqrt(pow(dot_product01, 2) + pow(dot_product12, 2) + pow(dot_product02, 2))
+    return L
+
+def DCM_Quaternion_rotator_check1(N, R, x_theta, y_theta, z_theta):
+    '''
+    calculate how many differences from rotation operator after rotation
+    
+    arguments:
+        N: how many steps for each round, steps is N in loop
+        R: how many rounds you want to compute
+        x_theta: total rotation angle around x-axis, radian
+        y_theta: total rotation angle around y-axis, radian
+        z_theta: total rotation angle around z-axis, radian    
+    '''
+    X1 = []
+    X2 = []
+    ORTHONORMALITY_COL_Q = []
+    ORTHONORMALITY_ROW_Q = []
+    ORTHONORMALITY_COL_DCM = []
+    ORTHONORMALITY_ROW_DCM = []
+    CONST = (x_theta + y_theta + z_theta) * 180 / np.pi
+    
+    for n in range (1,N):
+        orthonormality_col_q = 0
+        orthonormality_row_q = 0
+        orthonormality_col_dcm = 0
+        orthonormality_row_dcm = 0
+        for r in range(0,R):
+            x = random.random()
+            y = random.random()
+            z = random.random()
+
+            DCM = computeDCM_angle(x, y ,z)
+            DCM_zero = computeDCM_angle(x, y ,z)
+            Q = DCMtoQuaternion(DCM)
+            Q_zero = DCMtoQuaternion(DCM_zero)
+            steps = n
+            m1 = computeDCM(x_theta / steps, [1, 0, 0])
+            m2 = computeDCM(y_theta / steps, [0, 1, 0])
+            m3 = computeDCM(z_theta / steps, [0, 0, 1])
+            m4 = computeDCM(-y_theta / steps, [0, 1, 0])
+            q1 = Quaternion(math.cos(x_theta / (2 * steps)), math.sin(x_theta / (2 * steps)), 0, 0).norm_q()
+            q2 = Quaternion(math.cos(x_theta / (2 * steps)), 0, math.sin(x_theta / (2 * steps)), 0).norm_q()
+            q3 = Quaternion(math.cos(x_theta / (2 * steps)), 0, 0, math.sin(x_theta / (2 * steps))).norm_q()
+            q4 = Quaternion(math.cos(-y_theta / (2 * steps)), 0, math.sin(-y_theta / (2 * steps)), 0).norm_q()
+            for i in range(0, steps):
+                DCM = DCM @ m1
+                Q = (q1 * Q).norm_q()
+            for j in range(0, steps):
+                DCM = DCM @ m2
+                Q = (q2 * Q).norm_q()
+            for k in range(0, steps):
+                DCM = DCM @ m3
+                Q = (q3 * Q).norm_q()
+            for k in range(0, steps):
+                DCM = DCM @ m4
+                Q = (q4 * Q).norm_q()
+            Q = Q.toDCM()
+            Q_zero = Q_zero.toDCM()
+
+            orthonormality_col_q += DCM_orthonormality_check(Q, 0)
+            orthonormality_row_q += DCM_orthonormality_check(Q, 1)
+            orthonormality_col_dcm += DCM_orthonormality_check(DCM, 0)
+            orthonormality_row_dcm += DCM_orthonormality_check(DCM, 1)
+        CONST1 = n * R
+        X1.append(1.0 / (CONST1 * CONST))
+        X2.append(CONST1)
+        ORTHONORMALITY_COL_Q.append(orthonormality_col_q / R)
+        ORTHONORMALITY_ROW_Q.append(orthonormality_row_q / R)
         ORTHONORMALITY_COL_DCM.append(orthonormality_col_dcm / R)
         ORTHONORMALITY_ROW_DCM.append(orthonormality_row_dcm / R)
-    return X1, X2, DIAGONAL_CHECK_Q, OFF_DIAGONAL_CHECK_Q, ORTHONORMALITY_COL_Q, ORTHONORMALITY_ROW_Q, \
-           DIAGONAL_CHECK_DCM, OFF_DIAGONAL_CHECK_DCM, ORTHONORMALITY_COL_DCM, ORTHONORMALITY_ROW_DCM
+    return X1, X2, ORTHONORMALITY_COL_Q, ORTHONORMALITY_ROW_Q, ORTHONORMALITY_COL_DCM, ORTHONORMALITY_ROW_DCM
 
 def DCM_check (aDCM,bDCM): 
     '''
@@ -428,6 +480,7 @@ def DCM_Quaternion_rotator_check2(N, R, x_theta, y_theta, z_theta):
     X2 = []
     DIFF_CHECK_Q = []
     DIFF_CHECK_DCM = []
+    CONST = (x_theta + y_theta + z_theta) * 180 / np.pi
 
     
     for n in range (1, N):
@@ -439,11 +492,6 @@ def DCM_Quaternion_rotator_check2(N, R, x_theta, y_theta, z_theta):
             y = random.random()
             z = random.random()
 
-#            m1 = computeDCM(x, [1, 0, 0])
-#            m2 = computeDCM(y, [0, 1, 0])
-#            m3 = computeDCM(z, [0, 0, 1])
-#            
-#            DCM = m3 @ m2 @ m1
             DCM = computeDCM_angle(x, y, z)
             DCM_zero = DCM
             Q = DCMtoQuaternion(DCM)
@@ -471,8 +519,9 @@ def DCM_Quaternion_rotator_check2(N, R, x_theta, y_theta, z_theta):
             Q = Q.toDCM();
             diff_chk_q += DCM_check(Q, DCM_zero)
             diff_chk_dcm += DCM_check(DCM, DCM_zero)
-        X1.append(1.0 / n)
-        X2.append(n)
+        CONST1 = n * R
+        X1.append(1.0 / (CONST1 * CONST))
+        X2.append(CONST1)
         DIFF_CHECK_Q.append(diff_chk_q / R)
         DIFF_CHECK_DCM.append(diff_chk_dcm / R)
         
@@ -530,6 +579,7 @@ def DCM_Quaternion_rotator_check3(N, R, x_theta, y_theta, z_theta):
     X2 = []
     DIFF_CHECK_Q = []
     DIFF_CHECK_DCM = []
+    CONST = (x_theta + y_theta + z_theta) * 180 / np.pi
 
     
     for n in range (1, N):
@@ -541,13 +591,6 @@ def DCM_Quaternion_rotator_check3(N, R, x_theta, y_theta, z_theta):
             y = random.random()
             z = random.random()
 
-#            m1 = computeDCM(x, [1, 0, 0])
-#            m2 = computeDCM(y, [0, 1, 0])
-#            m3 = computeDCM(z, [0, 0, 1])
-            
-#            DCM = m3 @ m2 @ m1
-#            print("_________________________________")
-#            print(DCM)
             DCM = computeDCM_angle(x, y, z)
             Q = DCMtoQuaternion(DCM)
             steps = n
@@ -577,8 +620,9 @@ def DCM_Quaternion_rotator_check3(N, R, x_theta, y_theta, z_theta):
 #            diff_chk_dcm += extracAngleDCM(DCM, x, y, z)
             (x1, y1, z1) = extracAngleDCM(DCM, x, y, z)
             diff_chk_dcm += x - x1 + y - y1 + z - z1
-        X1.append(1.0 / n)
-        X2.append(n)
+        CONST1 = n * R
+        X1.append(1.0 / (CONST1 * CONST))
+        X2.append(CONST1)
         DIFF_CHECK_Q.append(diff_chk_q / R)
         DIFF_CHECK_DCM.append(diff_chk_dcm / R)
         
