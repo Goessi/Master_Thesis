@@ -131,6 +131,7 @@ def Quaternion_rotation_precision(N, R, x_theta, y_theta, z_theta):
             y = random.random()
             z = random.random()
             p = Quaternion(0.0, x, y, z)
+            print(p)
             p_zero = Quaternion(0.0, x, y, z)
             steps = n
             aTime = timeit.default_timer()
@@ -187,6 +188,7 @@ def DCM_rotation_precision(N, R, x_theta, y_theta, z_theta):
             z = random.random()
             v = [x, y, z]
             v_zero = [x, y, z]
+            print(v)
             steps = n
             m1 = computeDCM(x_theta / steps, [1, 0, 0])
             m2 = computeDCM(y_theta / steps, [0, 1, 0])
@@ -247,6 +249,7 @@ def Quaternion_DCM_rotation_precision(N, R, x_theta, y_theta, z_theta):
             y = random.random()
             z = random.random()
             p = Quaternion(0.0, x, y, z)
+            print(p)
             p_zero = Quaternion(0.0, x, y, z)
             v = [x, y, z]
             v_zero = [x, y, z]
@@ -328,8 +331,10 @@ def DCM_Quaternion_rotator_check0(N, R, x_theta, y_theta, z_theta):
             
             DCM = computeDCM_angle(x, y ,z)
             DCM_zero = computeDCM_angle(x, y ,z)
+            print(DCM)
             Q = DCMtoQuaternion(DCM)
             Q_zero = DCMtoQuaternion(DCM_zero)
+            print(Q)
             steps = n
             m1 = computeDCM(x_theta / steps, [1, 0, 0])
             m2 = computeDCM(y_theta / steps, [0, 1, 0])
@@ -417,8 +422,10 @@ def DCM_Quaternion_rotator_check1(N, R, x_theta, y_theta, z_theta):
 
             DCM = computeDCM_angle(x, y ,z)
             DCM_zero = computeDCM_angle(x, y ,z)
+            print(DCM)
             Q = DCMtoQuaternion(DCM)
             Q_zero = DCMtoQuaternion(DCM_zero)
+            print(Q)
             steps = n
             m1 = computeDCM(x_theta / steps, [1, 0, 0])
             m2 = computeDCM(y_theta / steps, [0, 1, 0])
@@ -494,7 +501,9 @@ def DCM_Quaternion_rotator_check2(N, R, x_theta, y_theta, z_theta):
 
             DCM = computeDCM_angle(x, y, z)
             DCM_zero = DCM
+            print(DCM)
             Q = DCMtoQuaternion(DCM)
+            print(Q)
             steps = n
             m1 = computeDCM(x_theta / steps, [1, 0, 0])
             m2 = computeDCM(y_theta / steps, [0, 1, 0])
@@ -592,7 +601,9 @@ def DCM_Quaternion_rotator_check3(N, R, x_theta, y_theta, z_theta):
             z = random.random()
 
             DCM = computeDCM_angle(x, y, z)
+            print(DCM)
             Q = DCMtoQuaternion(DCM)
+            print(Q)
             steps = n
             m1 = computeDCM(x_theta / steps, [1, 0, 0])
             m2 = computeDCM(y_theta / steps, [0, 1, 0])
