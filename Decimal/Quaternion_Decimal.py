@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Jan  7 18:53:44 2019
+Created on Tue Dec  4 22:04:11 2018
+
+first version of Master thesis codes, initial model
 
 @author: JingQIN
 """
+
 import math
 import numpy as np
 import decimal
@@ -117,7 +120,12 @@ class Quaternion(object):
         c = vectors[1] * math.sin(theta / 2.)
         d = vectors[2] * math.sin(theta / 2.)
         
-        r = Quaternion(decimal.Decimal(a), decimal.Decimal(b), decimal.Decimal(c), decimal.Decimal(d))
+        a = decimal.Decimal(a)
+        b = decimal.Decimal(b)
+        c = decimal.Decimal(c)
+        d = decimal.Decimal(d)
+        
+        r = Quaternion(a, b, c, d)
         
         return r * self * r.conj()
     
@@ -140,10 +148,15 @@ class Quaternion(object):
         C31 = 2 * (q1 * q3 + q0 * q2)
         C32 = 2 * (q2 * q3 - q0 * q1)
         C33 = pow(q0, 2) - pow(q1, 2) - pow(q2, 2) + pow(q3, 2)
-        C3_norm = decimal.Decimal(math.sqrt(pow(C31, 2) + pow(C32, 2) + pow(C33, 2)))
-        C1_norm = decimal.Decimal(math.sqrt(pow(C11, 2) + pow(C12, 2) + pow(C13, 2)))
-        C2_norm = decimal.Decimal(math.sqrt(pow(C21, 2) + pow(C22, 2) + pow(C23, 2)))
-        DCM = [[C11/C1_norm, C12/C1_norm, C13/C1_norm],[C21/C2_norm, C22/C2_norm, C23/C2_norm],[C31/C3_norm, C32/C3_norm, C33/C3_norm]]
+        C3_norm = math.sqrt(pow(C31, 2) + pow(C32, 2) + pow(C33, 2))
+        C1_norm = math.sqrt(pow(C11, 2) + pow(C12, 2) + pow(C13, 2))
+        C2_norm = math.sqrt(pow(C21, 2) + pow(C22, 2) + pow(C23, 2))
+        
+        C3_norm = decimal.Decimal(C3_norm)
+        C1_norm = decimal.Decimal(C1_norm)
+        C2_norm = decimal.Decimal(C2_norm)
+        
+        DCM = [[C11 / C1_norm, C12 / C1_norm, C13 / C1_norm],[C21 / C2_norm, C22 / C2_norm, C23 / C2_norm],[C31 / C3_norm, C32 / C3_norm, C33 / C3_norm]]
         return np.array(DCM)
         
         
@@ -163,3 +176,4 @@ class Quaternion(object):
                     else:
                         w = w + '+' + str(v) + k                
         return w
+    
