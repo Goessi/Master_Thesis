@@ -104,7 +104,7 @@ class Quaternion(object):
     
     def rotator(self, theta, vectors):
         '''
-        from angle and vectors, compute a quaternion
+        from angle and vectors, compute a quaternion rotation
         
         arguments:
             theta -- rotation angle, radians
