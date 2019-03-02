@@ -34,15 +34,15 @@ cdef computeDCM(float theta, vector[float] vectors):
     cdef float cosTheta = cosf(theta)
     cdef float sinTheta = sinf(theta)
     cdef float oneCosT = 1 - cosTheta
-    cdef float DCM[0][0] = cosTheta + pow(f1, 2) * oneCosT
-    cdef float DCM[0][1] = f1 * f2 * oneCosT + f3 * sinTheta
-    cdef float DCM[0][2] = f1 * f3 * oneCosT - f2 * sinTheta
-    cdef float DCM[1][0] = f1 * f2 * oneCosT - f3 * sinTheta
-    cdef float DCM[1][1] = cosTheta + pow(f2, 2) * oneCosT
-    cdef float DCM[1][2] = f2 * f3 * oneCosT + f1 * sinTheta
-    cdef float DCM[2][0] = f1 * f3 * oneCosT + f2 * sinTheta
-    cdef float DCM[2][1] = f2 * f3 * oneCosT - f1 * sinTheta
-    cdef float DCM[2][2] = cosTheta + pow(f3, 2) * oneCosT
+    DCM[0][0] = cosTheta + pow(f1, 2) * oneCosT
+    DCM[0][1] = f1 * f2 * oneCosT + f3 * sinTheta
+    DCM[0][2] = f1 * f3 * oneCosT - f2 * sinTheta
+    DCM[1][0] = f1 * f2 * oneCosT - f3 * sinTheta
+    DCM[1][1] = cosTheta + pow(f2, 2) * oneCosT
+    DCM[1][2] = f2 * f3 * oneCosT + f1 * sinTheta
+    DCM[2][0] = f1 * f3 * oneCosT + f2 * sinTheta
+    DCM[2][1] = f2 * f3 * oneCosT - f1 * sinTheta
+    DCM[2][2] = cosTheta + pow(f3, 2) * oneCosT
 
     return ndarray(DCM)
 
