@@ -120,7 +120,7 @@ cdef class Quaternion(object):
         
         cdef float sum_v = sum([v * v for v in vectors])
         cdef float norm_v = sqrt(sum_v)
-        cdef vector[float] vectors = [v / norm_v for v in vectors]
+        vectors = [v / norm_v for v in vectors]
             
         cdef float a = cosf(theta / 2.)
         cdef float b = vectors[0] * sinf(theta / 2.)
