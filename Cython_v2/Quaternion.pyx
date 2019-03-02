@@ -36,7 +36,7 @@ cdef class Quaternion(object):
         self.c = c
         self.d = d        
     
-    def Quaternion __add__(self, Quaternion other):
+    def __add__(self, Quaternion other):
         '''compute Quaternion objects addition
         
         arguments:
