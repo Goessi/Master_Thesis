@@ -5,7 +5,7 @@ Created on Sat Dec 29 20:15:07 2018
 @author: JingQIN
 """
 import random
-from Quaternion import Quaternion
+import Quaternion
 import timeit
 import numpy as np
 
@@ -86,7 +86,6 @@ def Quaternion_rotation_precision(int N, int R, float x_theta, float y_theta, fl
             x = random.random()
             y = random.random()
             z = random.random()
-            import Quaternion
             p = Quaternion(0.0, x, y, z)
             print(p)
             p_zero = Quaternion(0.0, x, y, z)
