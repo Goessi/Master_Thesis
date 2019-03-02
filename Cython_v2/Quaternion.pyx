@@ -27,7 +27,7 @@ cdef class Quaternion(object):
         c -- a float parameter of fundamental quaternion unit j
         d -- a float parameter of fundamental quaternion unit k
     """    
-    cpdef __cinit__(self, float a, float b, float c, float d):
+    def __cinit__(self, float a, float b, float c, float d):
         '''initial Quaternion class with 4 floats'''
         #assert type(a) == decimal.Decimal and type(b) == decimal.Decimal and type(c) == decimal.Decimal and type(d) == decimal.Decimal
         
@@ -36,7 +36,7 @@ cdef class Quaternion(object):
         self.c = c
         self.d = d        
     
-    cpdef Quaternion __add__(self, Quaternion other):
+    def Quaternion __add__(self, Quaternion other):
         '''compute Quaternion objects addition
         
         arguments:
@@ -44,7 +44,7 @@ cdef class Quaternion(object):
         '''
         return Quaternion(self.a + other.a, self.b + other.b, self.c + other.c, self.d + other.d)
     
-    cpdef __sub__(self, Quaternion other):
+    def __sub__(self, Quaternion other):
         '''compute Quaternion objects subtraction
         
         arguments:
@@ -52,7 +52,7 @@ cdef class Quaternion(object):
         '''
         return Quaternion(self.a - other.a, self.b - other.b, self.c - other.c, self.d - other.d)
         
-    cpdef __mul__(self, Quaternion other):
+    def __mul__(self, Quaternion other):
         '''compute Quaternion objects multiple
         
         arguments:
@@ -157,7 +157,7 @@ cdef class Quaternion(object):
         return ndarray(DCM)
         
         
-    cpdef __str__(self):
+    def __str__(self):
         ''' document printing'''
         parameters = {'':self.a, 'i':self.b, 'j':self.c, 'k':self.d}
         cdef int count = 0
