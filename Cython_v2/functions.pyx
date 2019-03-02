@@ -46,7 +46,7 @@ cdef computeDCM(float theta, vector[float] vectors):
 
     return ndarray(DCM)
 
-def Quaternion_rotation_precision(int N, int R, float x_theta, float y_theta, float z_theta):
+cdef Quaternion_rotation_precision(int N, int R, float x_theta, float y_theta, float z_theta):
     '''
     calculate precision for Quaternion rotation
     
@@ -113,7 +113,7 @@ def Quaternion_rotation_precision(int N, int R, float x_theta, float y_theta, fl
     return X1, X2, MEANDIFF, MINDIFF, MAXDIFF, TIME
 
 
-def DCM_rotation_precision(int N, int R, float x_theta, float y_theta, float z_theta):
+cdef DCM_rotation_precision(int N, int R, float x_theta, float y_theta, float z_theta):
     '''
     calculate precision for DCM rotation
     
