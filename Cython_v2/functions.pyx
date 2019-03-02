@@ -7,6 +7,7 @@ Created on Sat Dec 29 20:15:07 2018
 import random
 from Quaternion import Quaternion
 import timeit
+import numpy as np
 
 cdef extern from "math.h":
     double sqrt(double m)
@@ -73,7 +74,6 @@ cdef Quaternion_rotation_precision(int N, int R, float x_theta, float y_theta, f
     cdef float x = 0.0
     cdef float y = 0.0
     cdef float z = 0.0
-    cdef Quaternion p, p_zero
     cdef int steps = 0
     cdef float diff = 0.0
     
