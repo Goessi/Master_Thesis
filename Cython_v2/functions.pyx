@@ -20,7 +20,7 @@ from libcpp.string cimport string
 from libcpp.vector cimport vector
 
 
-cdef computeDCM(float theta, vector[float] vectors):
+def computeDCM(float theta, vector[float] vectors):
     '''
     compute standard DCM, a list of lists, 3*3 matrix
     
@@ -47,7 +47,7 @@ cdef computeDCM(float theta, vector[float] vectors):
 
     return ndarray(DCM)
 
-cdef Quaternion_rotation_precision(int N, int R, float x_theta, float y_theta, float z_theta):
+def Quaternion_rotation_precision(int N, int R, float x_theta, float y_theta, float z_theta):
     '''
     calculate precision for Quaternion rotation
     
@@ -113,7 +113,7 @@ cdef Quaternion_rotation_precision(int N, int R, float x_theta, float y_theta, f
     return X1, X2, MEANDIFF, MINDIFF, MAXDIFF, TIME
 
 
-cdef DCM_rotation_precision(int N, int R, float x_theta, float y_theta, float z_theta):
+def DCM_rotation_precision(int N, int R, float x_theta, float y_theta, float z_theta):
     '''
     calculate precision for DCM rotation
     
