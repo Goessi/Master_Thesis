@@ -86,6 +86,7 @@ def Quaternion_rotation_precision(int N, int R, float x_theta, float y_theta, fl
             x = random.random()
             y = random.random()
             z = random.random()
+            import Quaternion
             p = Quaternion(0.0, x, y, z)
             print(p)
             p_zero = Quaternion(0.0, x, y, z)
