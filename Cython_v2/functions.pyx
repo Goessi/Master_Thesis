@@ -58,12 +58,12 @@ def Quaternion_rotation_precision(int N, int R, float x_theta, float y_theta, fl
         z_theta: total rotation angle around z-axis, radian
     
     '''
-    cdef vector[float] X1 = []
-    cdef vector[int] X2 = []
-    cdef vector[float] MEANDIFF = []
-    cdef vector[float] MINDIFF = []
-    cdef vector[float] MAXDIFF = []
-    cdef vector[float] TIME = []
+    X1 = []
+    X2 = []
+    MEANDIFF = []
+    MINDIFF = []
+    MAXDIFF = []
+    TIME = []
     cdef float CONST = (x_theta + y_theta + z_theta) * 180 / np.pi
     cdef int CONST1 = 0
     cdef float meandiff = 0.0
@@ -125,12 +125,12 @@ def DCM_rotation_precision(int N, int R, float x_theta, float y_theta, float z_t
         z_theta: total rotation angle around z-axis, radian
     
     '''
-    cdef vector[float] X1 = []
-    cdef vector[int] X2 = []
-    cdef vector[float] MEANDIFF = []
-    cdef vector[float] MINDIFF = []
-    cdef vector[float] MAXDIFF = []
-    cdef vector[float] TIME = []
+    X1 = []
+    X2 = []
+    MEANDIFF = []
+    MINDIFF = []
+    MAXDIFF = []
+    TIME = []
     cdef float CONST = (x_theta + y_theta + z_theta) * 180 / np.pi
     cdef int CONST1 = 0
     cdef float meandiff = 0.0
@@ -140,7 +140,7 @@ def DCM_rotation_precision(int N, int R, float x_theta, float y_theta, float z_t
     cdef float x = 0.0
     cdef float y = 0.0
     cdef float z = 0.0
-    cdef vector[float] v = []
+    v = []
     cdef int steps = 0
     cdef float diff = 0.0
     
