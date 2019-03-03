@@ -27,7 +27,7 @@ cdef class Quaternion(object):
         c -- a float parameter of fundamental quaternion unit j
         d -- a float parameter of fundamental quaternion unit k
     """    
-    def __init__(self, float a, float b, float c, float d):
+    def __cinit__(self, float a, float b, float c, float d):
         '''initial Quaternion class with 4 floats'''
         #assert type(a) == decimal.Decimal and type(b) == decimal.Decimal and type(c) == decimal.Decimal and type(d) == decimal.Decimal
         
