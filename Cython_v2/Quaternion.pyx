@@ -18,7 +18,7 @@ from libcpp.string cimport string
 from libcpp.vector cimport vector
 
 
-cdef class Quaternion:
+def class Quaternion:
     """class of Quaternion that do the simple operations
     
     Attributes:
@@ -78,7 +78,7 @@ cdef class Quaternion:
             return NotImplemented 
         
     
-    cpdef scalar_mul(self, float scalar):
+    def scalar_mul(self, float scalar):
         '''compute Quaternion objects multiple
         
         arguments:
@@ -93,7 +93,7 @@ cdef class Quaternion:
         else:
             return NotImplemented
     
-    cpdef dot(self, Quaternion other):
+    def dot(self, Quaternion other):
         '''compute Quaternion objects dot production
         
         arguments:
@@ -101,13 +101,13 @@ cdef class Quaternion:
         '''
         return Quaternion(self.a * other.a, self.b * other.b, self.c * other.c, self.d * other.d)
     
-    cpdef norm(self):
+    def norm(self):
         '''
         compute Quaternion object norm
         '''
         return sqrt(pow(self.a, 2) + pow(self.b, 2) + pow(self.c, 2) + pow(self.d, 2))
     
-    cpdef norm_q(self):
+    def norm_q(self):
         '''
         compute normalized Quaternion
         '''
@@ -115,7 +115,7 @@ cdef class Quaternion:
         cdef Quaternion my_norm_q = Quaternion(self.a / mynorm, self.b / mynorm, self.c / mynorm, self.d / mynorm)
         return my_norm_q
     
-    cpdef conj(self):
+    def conj(self):
         '''
         compute Quaternion object complex conjugate
         '''
@@ -125,7 +125,7 @@ cdef class Quaternion:
         d = -self.d
         return Quaternion(a, b, c, d)
     
-    cpdef rotator(self, float theta, vector[float] vectors):
+    def rotator(self, float theta, vector[float] vectors):
         '''
         from angle and vectors, compute a quaternion
         
@@ -147,7 +147,7 @@ cdef class Quaternion:
         
         return r * self * r.conj()
     
-    cpdef toDCM(self):
+    def toDCM(self):
         '''
         compute a Quaternion object to a DCM, a list of lists
         specifically, a list of three 1*3 list, normalized 
