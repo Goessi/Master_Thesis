@@ -18,7 +18,7 @@ from libcpp.string cimport string
 from libcpp.vector cimport vector
 
 
-def class Quaternion:
+cdef class Quaternion:
     """class of Quaternion that do the simple operations
     
     Attributes:
