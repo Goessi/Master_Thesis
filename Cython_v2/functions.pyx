@@ -5,7 +5,7 @@ Created on Sat Dec 29 20:15:07 2018
 @author: JingQIN
 """
 import random
-import Quaternion
+from Quaternion import Quaternion
 import timeit
 import numpy as np
 

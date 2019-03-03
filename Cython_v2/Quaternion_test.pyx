@@ -8,7 +8,7 @@ test on quaternion
 """
 
 import matplotlib.pyplot as plt
-import Quaternion
+from Quaternion import Quaternion
 import functions as f
 import numpy as np
 
