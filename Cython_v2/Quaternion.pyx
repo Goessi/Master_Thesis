@@ -165,7 +165,7 @@ cdef class Quaternion(object):
         ''' document printing'''
         parameters = {'':self.a, 'i':self.b, 'j':self.c, 'k':self.d}
         cdef int count = 0
-        cdef string w = ''
+        w = ''
         for k,v in parameters.items():
             if v != 0:
                 if count == 0:
