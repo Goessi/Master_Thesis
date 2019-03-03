@@ -46,7 +46,10 @@ cdef class Quaternion:
         arguments:
             other -- another Quaternion object
         '''
-        return Quaternion(self.a + other.a, self.b + other.b, self.c + other.c, self.d + other.d)
+        if (isinstance(self, Quaternion)&&isinstance(other, Quaternion)):
+            return Quaternion(self.a + other.a, self.b + other.b, self.c + other.c, self.d + other.d)
+        else:
+            return NotImplemented
     
     def __sub__(self, Quaternion other):
         '''compute Quaternion objects subtraction
@@ -54,7 +57,10 @@ cdef class Quaternion:
         arguments:
             other -- another Quaternion object
         '''
-        return Quaternion(self.a - other.a, self.b - other.b, self.c - other.c, self.d - other.d)
+        if (isinstance(self, Quaternion)&&isinstance(other, Quaternion)):
+            return Quaternion(self.a - other.a, self.b - other.b, self.c - other.c, self.d - other.d)
+        else:
+            return NotImplemented        
         
     def __mul__(self, Quaternion other):
         '''compute Quaternion objects multiple
@@ -62,11 +68,15 @@ cdef class Quaternion:
         arguments:
             other -- another Quaternion object
         '''
-        a = self.a * other.a - self.b * other.b - self.c * other.c - self.d * other.d
-        b = self.a * other.b + self.b * other.a + self.c * other.d - self.d * other.c
-        c = self.a * other.c - self.b * other.d + self.c * other.a + self.d * other.b
-        d = self.a * other.d + self.b * other.c - self.c * other.b + self.d * other.a
-        return Quaternion(a, b, c, d)
+         if (isinstance(self, Quaternion)&&isinstance(other, Quaternion)):
+            a = self.a * other.a - self.b * other.b - self.c * other.c - self.d * other.d
+            b = self.a * other.b + self.b * other.a + self.c * other.d - self.d * other.c
+            c = self.a * other.c - self.b * other.d + self.c * other.a + self.d * other.b
+            d = self.a * other.d + self.b * other.c - self.c * other.b + self.d * other.a
+            return Quaternion(a, b, c, d)
+        else:
+            return NotImplemented 
+        
     
     cpdef scalar_mul(self, float scalar):
         '''compute Quaternion objects multiple
@@ -74,12 +84,14 @@ cdef class Quaternion:
         arguments:
             scalar -- a scalar
         '''
-        a = self.a * scalar
-        b = self.b * scalar
-        c = self.c * scalar
-        d = self.d * scalar
-        
-        return Quaternion(a, b, c, d)
+        if(isinstance(self, Quaternion)):
+            a = self.a * scalar
+            b = self.b * scalar
+            c = self.c * scalar
+            d = self.d * scalar
+            return Quaternion(a, b, c, d)
+        else:
+            return NotImplemented
     
     cpdef dot(self, Quaternion other):
         '''compute Quaternion objects dot production
