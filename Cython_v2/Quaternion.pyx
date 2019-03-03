@@ -46,7 +46,7 @@ cdef class Quaternion:
         arguments:
             other -- another Quaternion object
         '''
-        if (isinstance(self, Quaternion)&&isinstance(other, Quaternion)):
+        if (isinstance(self, Quaternion) and isinstance(other, Quaternion)):
             return Quaternion(self.a + other.a, self.b + other.b, self.c + other.c, self.d + other.d)
         else:
             return NotImplemented
@@ -57,7 +57,7 @@ cdef class Quaternion:
         arguments:
             other -- another Quaternion object
         '''
-        if (isinstance(self, Quaternion)&&isinstance(other, Quaternion)):
+        if (isinstance(self, Quaternion) and isinstance(other, Quaternion)):
             return Quaternion(self.a - other.a, self.b - other.b, self.c - other.c, self.d - other.d)
         else:
             return NotImplemented        
@@ -68,7 +68,7 @@ cdef class Quaternion:
         arguments:
             other -- another Quaternion object
         '''
-         if (isinstance(self, Quaternion)&&isinstance(other, Quaternion)):
+        if(isinstance(self, Quaternion) and isinstance(other, Quaternion)):
             a = self.a * other.a - self.b * other.b - self.c * other.c - self.d * other.d
             b = self.a * other.b + self.b * other.a + self.c * other.d - self.d * other.c
             c = self.a * other.c - self.b * other.d + self.c * other.a + self.d * other.b
