@@ -18,7 +18,7 @@ from libcpp.string cimport string
 from libcpp.vector cimport vector
 
 
-cdef class Quaternion(object):
+cdef class Quaternion:
     """class of Quaternion that do the simple operations
     
     Attributes:
@@ -31,14 +31,14 @@ cdef class Quaternion(object):
     cdef float b
     cdef float c
     cdef float d
-    def __init__(self, float a, float b, float c, float d):
+    def __init__(self, float aa, float bb, float cc, float dd):
         '''initial Quaternion class with 4 floats'''
         #assert type(a) == decimal.Decimal and type(b) == decimal.Decimal and type(c) == decimal.Decimal and type(d) == decimal.Decimal
         
-        self.a = a
-        self.b = b
-        self.c = c
-        self.d = d        
+        self.a = aa
+        self.b = bb
+        self.c = cc
+        self.d = dd        
     
     def __add__(self, Quaternion other):
         '''compute Quaternion objects addition
@@ -62,10 +62,10 @@ cdef class Quaternion(object):
         arguments:
             other -- another Quaternion object
         '''
-        cdef float a = self.a * other.a - self.b * other.b - self.c * other.c - self.d * other.d
-        cdef float b = self.a * other.b + self.b * other.a + self.c * other.d - self.d * other.c
-        cdef float c = self.a * other.c - self.b * other.d + self.c * other.a + self.d * other.b
-        cdef float d = self.a * other.d + self.b * other.c - self.c * other.b + self.d * other.a
+        a = self.a * other.a - self.b * other.b - self.c * other.c - self.d * other.d
+        b = self.a * other.b + self.b * other.a + self.c * other.d - self.d * other.c
+        c = self.a * other.c - self.b * other.d + self.c * other.a + self.d * other.b
+        d = self.a * other.d + self.b * other.c - self.c * other.b + self.d * other.a
         return Quaternion(a, b, c, d)
     
     cpdef scalar_mul(self, float scalar):
@@ -74,10 +74,10 @@ cdef class Quaternion(object):
         arguments:
             scalar -- a scalar
         '''
-        cdef float a = self.a * scalar
-        cdef float b = self.b * scalar
-        cdef float c = self.c * scalar
-        cdef float d = self.d * scalar
+        a = self.a * scalar
+        b = self.b * scalar
+        c = self.c * scalar
+        d = self.d * scalar
         
         return Quaternion(a, b, c, d)
     
