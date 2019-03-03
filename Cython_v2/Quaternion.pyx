@@ -31,6 +31,8 @@ cdef class Quaternion:
     cdef float b
     cdef float c
     cdef float d
+    cdef dict __dict__
+    
     def __init__(self, float aa, float bb, float cc, float dd):
         '''initial Quaternion class with 4 floats'''
         #assert type(a) == decimal.Decimal and type(b) == decimal.Decimal and type(c) == decimal.Decimal and type(d) == decimal.Decimal
@@ -68,6 +70,7 @@ cdef class Quaternion:
         arguments:
             other -- another Quaternion object
         '''
+        
         if(isinstance(self, Quaternion) and isinstance(other, Quaternion)):
             a = self.a * other.a - self.b * other.b - self.c * other.c - self.d * other.d
             b = self.a * other.b + self.b * other.a + self.c * other.d - self.d * other.c
