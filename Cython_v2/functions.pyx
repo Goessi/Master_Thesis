@@ -13,7 +13,6 @@ cdef extern from "math.h":
     double sqrt(double m)
     float cosf(float theta)
     float sinf(float theta)
-from numpy cimport ndarray
 cimport numpy as np
 cimport cython
 from libcpp.string cimport string
@@ -45,7 +44,7 @@ def computeDCM(float theta, vector[float] vectors):
     DCM[2][1] = f2 * f3 * oneCosT - f1 * sinTheta
     DCM[2][2] = cosTheta + pow(f3, 2) * oneCosT
 
-    return ndarray(DCM)
+    return np.array(DCM)
 
 def Quaternion_rotation_precision(int N, int R, float x_theta, float y_theta, float z_theta):
     '''
