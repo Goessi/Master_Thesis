@@ -76,7 +76,7 @@ class Quaternion(object):
         arguments:
             other -- another Quaternion object
         '''
-        return Quaternion(self.a * other.a, self.b * other.b, self.c * other.c, self.d * other.d)
+        return self.a * other.a + self.b * other.b + self.c * other.c + self.d * other.d
     
     def norm(self):
         '''
