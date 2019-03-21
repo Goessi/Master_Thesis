@@ -169,6 +169,7 @@ plt.show()
 fig.set_size_inches(18.5, 10.5)
 fig.savefig('DCM_Quaternion_Precision_semilog.png', dpi = 100)
 
+
 print("--------test on rotator differences-------")
 (X1, X2, DIAGONAL_CHECK_Q, OFF_DIAGONAL_CHECK_Q, DIAGONAL_CHECK_DCM, OFF_DIAGONAL_CHECK_DCM) = f.DCM_Quaternion_rotator_check0(3, 1, np.pi / 2, np.pi / 2, np.pi / 2)
 np.savez("DCM_Quaternion_rotator_check0.npz", X1 = X1, X2 = X2, DIAGONAL_CHECK_Q = DIAGONAL_CHECK_Q, OFF_DIAGONAL_CHECK_Q = OFF_DIAGONAL_CHECK_Q, DIAGONAL_CHECK_DCM = DIAGONAL_CHECK_DCM, OFF_DIAGONAL_CHECK_DCM = OFF_DIAGONAL_CHECK_DCM)
