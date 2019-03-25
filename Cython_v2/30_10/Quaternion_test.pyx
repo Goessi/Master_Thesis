@@ -11,10 +11,10 @@ import matplotlib.pyplot as plt
 from Quaternion import Quaternion
 import functions as f
 import numpy as np
-import timeit
+
 
 print("-------Quaternion-----------------------")
-(X1, X2, MEANDIFF, MINDIFF, MAXDIFF, TIME, TOTALTIME) = f.Quaternion_rotation_precision(30, 10, np.pi, np.pi, np.pi)
+X1, X2, MEANDIFF, MINDIFF, MAXDIFF, TIME, TOTALTIME = f.Quaternion_rotation_precision(30, 10, np.pi, np.pi, np.pi)
 np.savez("Quaternion_rotation_precision.npz", X1 = X1, X2 = X2, MEANDIFF = MEANDIFF, MINDIFF = MINDIFF, MAXDIFF = MAXDIFF, TIME = TIME, TOTALTIME = TOTALTIME)
 
 fig, ax = plt.subplots()
@@ -29,7 +29,7 @@ fig.set_size_inches(18.5, 10.5)
 fig.savefig('Time_Quaternion1.png', dpi = 100)
 
 print("-------DCM-----------------------")
-(X1, X2, MEANDIFF, MINDIFF, MAXDIFF, TIME, TOTALTIME) = f.DCM_rotation_precision(30, 10, np.pi, np.pi, np.pi)
+X1, X2, MEANDIFF, MINDIFF, MAXDIFF, TIME, TOTALTIME = f.DCM_rotation_precision(30, 10, np.pi, np.pi, np.pi)
 np.savez("DCM_rotation_precision.npz", X1 = X1, X2 = X2, MEANDIFF = MEANDIFF, MINDIFF = MINDIFF, MAXDIFF = MAXDIFF, TIME = TIME, TOTALTIME = TOTALTIME)
 
 fig, ax = plt.subplots()
