@@ -7,6 +7,7 @@ Created on Sat Dec 29 20:15:07 2018
 import random
 from Quaternion import Quaternion
 import timeit
+import time
 import numpy as np
 
 cdef extern from "math.h":
@@ -58,12 +59,14 @@ def Quaternion_rotation_precision(int N, int R, float x_theta, float y_theta, fl
         z_theta: total rotation angle around z-axis, radian
     
     '''
+    cdef float time1 = time.clock();
     X1 = []
     X2 = []
     MEANDIFF = []
     MINDIFF = []
     MAXDIFF = []
     TIME = []
+    cdef float TOTALTIME = 0.0
     cdef float CONST = (x_theta + y_theta + z_theta) * 180 / np.pi
     cdef int CONST1 = 0
     cdef float meandiff = 0.0
@@ -109,7 +112,8 @@ def Quaternion_rotation_precision(int N, int R, float x_theta, float y_theta, fl
         MEANDIFF.append(meandiff / R)
         MINDIFF.append(mindiff)
         MAXDIFF.append(maxdiff)
-    return X1, X2, MEANDIFF, MINDIFF, MAXDIFF, TIME
+    TOTALTIME = time.clock() - time1
+    return X1, X2, MEANDIFF, MINDIFF, MAXDIFF, TIME, TOTALTIME
 
 
 def DCM_rotation_precision(int N, int R, float x_theta, float y_theta, float z_theta):
@@ -124,12 +128,14 @@ def DCM_rotation_precision(int N, int R, float x_theta, float y_theta, float z_t
         z_theta: total rotation angle around z-axis, radian
     
     '''
+    cdef float time1 = time.clock();
     X1 = []
     X2 = []
     MEANDIFF = []
     MINDIFF = []
     MAXDIFF = []
     TIME = []
+    cdef float TOTALTIME = 0.0
     cdef float CONST = (x_theta + y_theta + z_theta) * 180 / np.pi
     cdef int CONST1 = 0
     cdef float meandiff = 0.0
@@ -179,4 +185,5 @@ def DCM_rotation_precision(int N, int R, float x_theta, float y_theta, float z_t
         MEANDIFF.append(meandiff / R)
         MINDIFF.append(mindiff)
         MAXDIFF.append(maxdiff)
-    return X1, X2, MEANDIFF, MINDIFF, MAXDIFF, TIME
+    TOTALTIME = time.clock() - time1
+    return X1, X2, MEANDIFF, MINDIFF, MAXDIFF, TIME, TOTALTIME
