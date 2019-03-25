@@ -72,7 +72,7 @@ def Quaternion_rotation_precision(int N, int R, float x_theta, float y_theta, fl
     cdef float meandiff = 0.0
     cdef float maxdiff = 0.0
     cdef float mindiff = 0.0
-    cdef float time = 0.0
+    cdef float time_step = 0.0
     cdef float x = 0.0
     cdef float y = 0.0
     cdef float z = 0.0
@@ -100,12 +100,12 @@ def Quaternion_rotation_precision(int N, int R, float x_theta, float y_theta, fl
             for k in range(0, steps):
                 p = p.rotator(z_theta / steps, [0.0, 0.0, 1.0])  
             bTime = timeit.default_timer()
-            time += (bTime - aTime) / (3 * n)
+            time_step += (bTime - aTime) / (3 * n)
             diff = (p_zero - p).norm()
             meandiff += diff
             mindiff = min(mindiff, diff)
             maxdiff = max(maxdiff, diff)        
-        TIME.append(time / R)
+        TIME.append(time_step / R)
         CONST1 = n * R
         X1.append(1.0 / (CONST1 * CONST))
         X2.append(CONST1)
@@ -141,7 +141,7 @@ def DCM_rotation_precision(int N, int R, float x_theta, float y_theta, float z_t
     cdef float meandiff = 0.0
     cdef float maxdiff = 0.0
     cdef float mindiff = 0.0
-    cdef float time = 0.0
+    cdef float time_step = 0.0
     cdef float x = 0.0
     cdef float y = 0.0
     cdef float z = 0.0
@@ -173,12 +173,12 @@ def DCM_rotation_precision(int N, int R, float x_theta, float y_theta, float z_t
             for k in range(0, steps):
                 v = np.dot(m3, v)   
             bTime = timeit.default_timer()
-            time += (bTime - aTime) / (3 * n)
+            time_step += (bTime - aTime) / (3 * n)
             diff = sqrt(pow(v[0] - v_zero[0], 2) + pow(v[1] - v_zero[1], 2) + pow(v[2] - v_zero[2], 2))
             meandiff += diff
             mindiff = min(mindiff, diff)
             maxdiff = max(maxdiff, diff)        
-        TIME.append(time / R)
+        TIME.append(time_step / R)
         CONST1 = n * R
         X1.append(1.0 / (CONST1 * CONST))
         X2.append(CONST1)
