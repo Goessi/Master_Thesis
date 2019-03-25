@@ -27,7 +27,6 @@ legend.get_frame().set_facecolor('C0')
 plt.show()
 fig.set_size_inches(18.5, 10.5)
 fig.savefig('Time_Quaternion1.png', dpi = 100)
-print(TOTALTIME)
 
 print("-------DCM-----------------------")
 (X1, X2, MEANDIFF, MINDIFF, MAXDIFF, TIME, TOTALTIME) = f.DCM_rotation_precision(30, 10, np.pi, np.pi, np.pi)
@@ -43,7 +42,6 @@ legend.get_frame().set_facecolor('C0')
 plt.show()
 fig.set_size_inches(18.5, 10.5)
 fig.savefig('Time_DCM1.png', dpi = 100)
-print(TOTALTIME)
 
 
 

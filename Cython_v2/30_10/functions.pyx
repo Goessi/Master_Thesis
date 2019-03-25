@@ -66,7 +66,7 @@ def Quaternion_rotation_precision(int N, int R, float x_theta, float y_theta, fl
     MINDIFF = []
     MAXDIFF = []
     TIME = []
-    cdef float TOTALTIME = 0.0
+    TOTALTIME = []
     cdef float CONST = (x_theta + y_theta + z_theta) * 180 / np.pi
     cdef int CONST1 = 0
     cdef float meandiff = 0.0
@@ -112,7 +112,7 @@ def Quaternion_rotation_precision(int N, int R, float x_theta, float y_theta, fl
         MEANDIFF.append(meandiff / R)
         MINDIFF.append(mindiff)
         MAXDIFF.append(maxdiff)
-    TOTALTIME = time.clock() - time1
+    TOTALTIME.append(time.clock() - time1)
     return X1, X2, MEANDIFF, MINDIFF, MAXDIFF, TIME, TOTALTIME
 
 
@@ -135,7 +135,7 @@ def DCM_rotation_precision(int N, int R, float x_theta, float y_theta, float z_t
     MINDIFF = []
     MAXDIFF = []
     TIME = []
-    cdef float TOTALTIME = 0.0
+    TOTALTIME = []
     cdef float CONST = (x_theta + y_theta + z_theta) * 180 / np.pi
     cdef int CONST1 = 0
     cdef float meandiff = 0.0
@@ -185,5 +185,5 @@ def DCM_rotation_precision(int N, int R, float x_theta, float y_theta, float z_t
         MEANDIFF.append(meandiff / R)
         MINDIFF.append(mindiff)
         MAXDIFF.append(maxdiff)
-    TOTALTIME = time.clock() - time1
+    TOTALTIME.append(time.clock() - time1)
     return X1, X2, MEANDIFF, MINDIFF, MAXDIFF, TIME, TOTALTIME
