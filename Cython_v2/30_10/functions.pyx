@@ -83,7 +83,7 @@ def Quaternion_rotation_precision(int N, int R, float x_theta, float y_theta, fl
         meandiff = 0.0
         maxdiff = 0.0
         mindiff = 1e9
-        time = 0
+        time_step = 0
         for r in range(0,R):
             x = random.random()
             y = random.random()
@@ -153,7 +153,7 @@ def DCM_rotation_precision(int N, int R, float x_theta, float y_theta, float z_t
         meandiff = 0.0
         maxdiff = 0.0
         mindiff = 1e9
-        time = 0
+        time_step = 0
         for r in range(0, R):
             x = random.random()
             y = random.random()
