@@ -11,10 +11,14 @@ import matplotlib.pyplot as plt
 from Quaternion import Quaternion
 import functions as f
 import numpy as np
+import timeit
 
 print("-------Quaternion-----------------------")
+aTime = timeit.default_timer()
 (X1, X2, MEANDIFF, MINDIFF, MAXDIFF, TIME) = f.Quaternion_rotation_precision(30, 10, np.pi, np.pi, np.pi)
-np.savez("Quaternion_rotation_precision.npz", X1 = X1, X2 = X2, MEANDIFF = MEANDIFF, MINDIFF = MINDIFF, MAXDIFF = MAXDIFF, TIME = TIME)
+bTime = timeit.default_timer()
+time = bTime - aTIme
+np.savez("Quaternion_rotation_precision.npz", X1 = X1, X2 = X2, MEANDIFF = MEANDIFF, MINDIFF = MINDIFF, MAXDIFF = MAXDIFF, TIME = TIME, TOTALTIME=time)
 
 fig, ax = plt.subplots()
 ax.plot(X2, TIME, 'o--', label = 'time', color = 'red')
@@ -28,8 +32,11 @@ fig.set_size_inches(18.5, 10.5)
 fig.savefig('Time_Quaternion1.png', dpi = 100)
 
 print("-------DCM-----------------------")
+aTime = timeit.default_timer()
 (X1, X2, MEANDIFF, MINDIFF, MAXDIFF, TIME) = f.DCM_rotation_precision(30, 10, np.pi, np.pi, np.pi)
-np.savez("DCM_rotation_precision.npz", X1 = X1, X2 = X2, MEANDIFF = MEANDIFF, MINDIFF = MINDIFF, MAXDIFF = MAXDIFF, TIME = TIME)
+bTime = timeit.default_timer()
+time = bTime - aTIme
+np.savez("DCM_rotation_precision.npz", X1 = X1, X2 = X2, MEANDIFF = MEANDIFF, MINDIFF = MINDIFF, MAXDIFF = MAXDIFF, TIME = TIME, TOTALTIME=time)
 
 fig, ax = plt.subplots()
 ax.plot(X2, TIME, 'o--', label = 'time', color = 'green')
