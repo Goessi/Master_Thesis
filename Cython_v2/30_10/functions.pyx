@@ -59,7 +59,7 @@ def Quaternion_rotation_precision(int N, int R, float x_theta, float y_theta, fl
         z_theta: total rotation angle around z-axis, radian
     
     '''
-    cdef float time1 = time.clock();
+    time1 = time.clock();
     X1 = []
     X2 = []
     MEANDIFF = []
@@ -128,7 +128,7 @@ def DCM_rotation_precision(int N, int R, float x_theta, float y_theta, float z_t
         z_theta: total rotation angle around z-axis, radian
     
     '''
-    cdef float time1 = time.clock();
+    time1 = time.clock();
     X1 = []
     X2 = []
     MEANDIFF = []
