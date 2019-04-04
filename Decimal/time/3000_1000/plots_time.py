@@ -11,6 +11,8 @@ import numpy as np
 #import csv
 r = np.load("Quaternion_rotation_precision.npz")
 k = np.load("DCM_rotation_precision.npz")
+print(np.mean(r['TIME']))
+print(np.mean(k['TIME']))
 fig, ax = plt.subplots()
 ax.plot(r['X2'], r['TIME'], 'o--', label = 'Quaternion', color = 'red')
 ax.plot(k['X2'], k['TIME'], 'o--', label = 'DCM', color = 'green')
