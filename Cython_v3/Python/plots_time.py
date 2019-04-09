@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Jan 28 15:21:00 2019
+Created on Sat Mar 30 08:09:44 2019
 
 @author: JingQIN
 """
@@ -11,8 +11,10 @@ import numpy as np
 #import csv
 r = np.load("Quaternion_rotation_precision.npz")
 k = np.load("DCM_rotation_precision.npz")
-print(np.mean(r['TIME']))
-print(np.mean(k['TIME']))
+print(np.mean(r['TOTALTIME']))
+print(np.mean(k['TOTALTIME']))
+print(np.mean(r['TIME'])/np.mean(k['TIME']))
+
 fig, ax = plt.subplots()
 ax.plot(r['X2'], r['TIME'], 'o--', label = 'Quaternion', color = 'red')
 ax.plot(k['X2'], k['TIME'], 'o--', label = 'DCM', color = 'green')
@@ -25,8 +27,6 @@ plt.show()
 fig.set_size_inches(18.5, 10.5)
 fig.savefig('Time.png', dpi = 100)
 
-r = np.load("Quaternion_rotation_precision.npz")
-k = np.load("DCM_rotation_precision.npz")
 fig, ax = plt.subplots()
 ax.plot(r['X2'], r['TIME']/k['TIME'], '--', label = 'Quaternion', color = 'blue')
 ax.set_xlabel("Number of Full Rotations")
