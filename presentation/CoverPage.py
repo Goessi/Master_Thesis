@@ -133,7 +133,8 @@ VY = vector_location([0,1,0],2*np.pi, 2*np.pi, 2*np.pi)
 VZ = vector_location([0,0,1],2*np.pi, 2*np.pi, 2*np.pi)
 
 fig = plt.figure()
-ax1 = fig.add_subplot(122, projection='3d')
+ax1 = fig.add_subplot(111, projection='3d')
+ax1.set_facecolor('xkcd:black')
 ax1.set_xlim(-1.1, 1.1)
 ax1.set_ylim(-1.1, 1.1)
 ax1.set_zlim(-1.1, 1.1)
@@ -156,38 +157,43 @@ ax1.plot([0,2], [0,0],[0,0],color='blue')
 ax1.plot([2,1.9],[0,0],[0,0.1],color='blue')
 ax1.plot([2,1.9],[0,0],[0,-0.1],color='blue')
 for j in range(0,len(VX),10):
-    ax1.plot([0, VX[j][0]], [0,VY[j][0]],[0,VZ[j][0]],color='steelblue')
-    ax1.plot([0, VX[j][1]], [0,VY[j][1]],[0,VZ[j][1]],color='lime')
-    ax1.plot([0, VX[j][2]], [0,VY[j][2]],[0,VZ[j][2]],color='maroon')
-
-ax2 = fig.add_subplot(121, projection='3d')
-ax2.set_xlim(-1.1, 1.1)
-ax2.set_ylim(-1.1, 1.1)
-ax2.set_zlim(-1.1, 1.1)
-ax2.set_xlabel("x")
-ax2.set_ylabel("y")
-ax2.set_zlabel("z")
-plt.rcParams['animation.html'] = 'html5'
-ax2.view_init(elev=-20., azim=235)
-ax2.set_aspect('equal')
-ax2.axis('off')
-
-ax2.plot([0, 0], [0,2.5],[0,0],color='green')
-ax2.plot([0,0],[2.5,2.4],[0,0.1],color='green')
-ax2.plot([0,0],[2.5,2.4],[0,-0.1],color='green')
-
-ax2.plot([0, 0], [0,0],[0,1.7],color='red')
-ax2.plot([0,0.07],[0,0],[1.7,1.6],color='red')
-ax2.plot([0,-0.07],[0,0],[1.7,1.6],color='red')
-
-ax2.plot([0,2], [0,0],[0,0],color='blue')
-ax2.plot([2,1.9],[0,0],[0,0.1],color='blue')
-ax2.plot([2,1.9],[0,0],[0,-0.1],color='blue')
+    ax1.plot([0, VX[j][0]], [0,VY[j][0]],[0,VZ[j][0]],color='paleturquoise')
+    ax1.plot([0, VX[j][1]], [0,VY[j][1]],[0,VZ[j][1]],color='palegreen')
+    ax1.plot([0, VX[j][2]], [0,VY[j][2]],[0,VZ[j][2]],color='lightcoral')
 for j in range(0, len(x1)):
-    ax2.scatter(x1[:j], y1[:j], z1[:j], '.', color='steelblue',s=2)
+    ax1.scatter(x1[:j], y1[:j], z1[:j], '.', color='steelblue',s=2)
 for j in range(0, len(x2)):
-    ax2.scatter(x2[:j], y2[:j], z2[:j], '.', color='lime',s=2)
+    ax1.scatter(x2[:j], y2[:j], z2[:j], '.', color='lime',s=2)
 for j in range(0, len(x3)):
-    ax2.scatter(x3[:j], y3[:j], z3[:j], '.', color='maroon',s=2)
+    ax1.scatter(x3[:j], y3[:j], z3[:j], '.', color='maroon',s=2)
+#ax2 = fig.add_subplot(121, projection='3d')
+#ax2.set_xlim(-1.1, 1.1)
+#ax2.set_ylim(-1.1, 1.1)
+#ax2.set_zlim(-1.1, 1.1)
+#ax2.set_xlabel("x")
+#ax2.set_ylabel("y")
+#ax2.set_zlabel("z")
+#plt.rcParams['animation.html'] = 'html5'
+#ax2.view_init(elev=-20., azim=235)
+#ax2.set_aspect('equal')
+#ax2.axis('off')
+#
+#ax2.plot([0, 0], [0,2.5],[0,0],color='green')
+#ax2.plot([0,0],[2.5,2.4],[0,0.1],color='green')
+#ax2.plot([0,0],[2.5,2.4],[0,-0.1],color='green')
+#
+#ax2.plot([0, 0], [0,0],[0,1.7],color='red')
+#ax2.plot([0,0.07],[0,0],[1.7,1.6],color='red')
+#ax2.plot([0,-0.07],[0,0],[1.7,1.6],color='red')
+#
+#ax2.plot([0,2], [0,0],[0,0],color='blue')
+#ax2.plot([2,1.9],[0,0],[0,0.1],color='blue')
+#ax2.plot([2,1.9],[0,0],[0,-0.1],color='blue')
+#for j in range(0, len(x1)):
+#    ax2.scatter(x1[:j], y1[:j], z1[:j], '.', color='steelblue',s=2)
+#for j in range(0, len(x2)):
+#    ax2.scatter(x2[:j], y2[:j], z2[:j], '.', color='lime',s=2)
+#for j in range(0, len(x3)):
+#    ax2.scatter(x3[:j], y3[:j], z3[:j], '.', color='maroon',s=2)
 
-plt.savefig("coverPage1.png", dpi=400)
+plt.savefig("coverPage2.png", dpi=400)
