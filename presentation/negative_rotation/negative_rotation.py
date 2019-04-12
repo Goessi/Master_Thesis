@@ -87,14 +87,16 @@ ax.set_zlabel("z")
 plt.rcParams['animation.html'] = 'html5'
 
 lns = []
-for j in range(len(VX)):
+ax.view_init(elev=45., azim=135)
+for j in range(0,len(VX),10):
     ax.plot([0, VX[j][0]], [0,VY[j][0]],[0,VZ[j][0]],color='steelblue')
     ax.plot([0, VX[j][1]], [0,VY[j][1]],[0,VZ[j][1]],color='lime')
     ax.plot([0, VX[j][2]], [0,VY[j][2]],[0,VZ[j][2]],color='maroon')
-    plt.savefig("movie%d.png" %j)
-    del ax.lines[0]
-    del ax.lines[0]
-    del ax.lines[0]
+#    plt.savefig("movie%d.png" %j)
+#    del ax.lines[0]
+#    del ax.lines[0]
+#    del ax.lines[0]
+plt.savefig("coverPage.png")
 
 #line_ani = animation.ArtistAnimation(fig, lns, interval=1000, blit=True)
 #
