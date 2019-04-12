@@ -190,4 +190,4 @@ for j in range(0, len(x2)):
 for j in range(0, len(x3)):
     ax2.scatter(x3[:j], y3[:j], z3[:j], '.', color='maroon',s=2)
 
-plt.savefig("coverPage1.png")
+plt.savefig("coverPage1.png", dpi=400)
