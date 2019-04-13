@@ -53,9 +53,9 @@ def DCM_rotation_precision(x_theta, y_theta, z_theta):
     X = []
     Y = []
     Z = []
-    x = random.random()
-    y = random.random()
-    z = random.random()
+    x = 0.5
+    y = 0.5
+    z = 0.5
     v = [x, y, z]
     X.append(x)
     Y.append(y)
@@ -79,11 +79,25 @@ def DCM_rotation_precision(x_theta, y_theta, z_theta):
         X.append(v[0])
         Y.append(v[1])
         Z.append(v[2])
-    X.append(x)
-    Y.append(y)
-    Z.append(z)
+    X.append(0.5)
+    Y.append(0.5)
+    Z.append(0.5)
     return X, Y, Z
 
+def plot_axis(ax):
+    ax.plot([0, 0], [0,2.5],[0,0],color='green')
+    ax.plot([0,0],[2.5,2.4],[0,0.1],color='green')
+    ax.plot([0,0],[2.5,2.4],[0,-0.1],color='green')
+    
+    
+    ax.plot([0, 0], [0,0],[0,1.7],color='red')
+    ax.plot([0,0.07],[0,0],[1.7,1.6],color='red')
+    ax.plot([0,-0.07],[0,0],[1.7,1.6],color='red')
+    
+    ax.plot([0,2], [0,0],[0,0],color='blue')
+    ax.plot([2,1.9],[0,0],[0,0.1],color='blue')
+    ax.plot([2,1.9],[0,0],[0,-0.1],color='blue')
+    
 x, y, z = DCM_rotation_precision(np.pi, np.pi, np.pi)
 x = array(x)
 y = array(y)
@@ -98,22 +112,26 @@ ax.set_xlabel("x")
 ax.set_ylabel("y")
 ax.set_zlabel("z")
 plt.rcParams['animation.html'] = 'html5'
-
-for j in range(183):
-    ax.plot([-2,2], [0,0],[0,0],color='steelblue')
-    ax.plot([0, 0], [-2,2],[0,0],color='lime')
-    ax.plot([0, 0], [0,0],[-2,2],color='maroon')
+ax.view_init(elev=-20., azim=235)
+ax.set_aspect('equal')
+for j in range(0,183):
+#    ax.plot([-2,2], [0,0],[0,0],color='steelblue')
+#    ax.plot([0, 0], [-2,2],[0,0],color='lime')
+#    ax.plot([0, 0], [0,0],[-2,2],color='maroon')
+    plot_axis(ax)
     ax.plot(x[:j], y[:j], z[:j], 'o-', color='steelblue')
     plt.savefig("movie%d.png" %j)
 for i in range(1,181):
-    ax.plot([-2,2], [0,0],[0,0],color='steelblue')
-    ax.plot([0, 0], [-2,2],[0,0],color='lime')
-    ax.plot([0, 0], [0,0],[-2,2],color='maroon')
+#    ax.plot([-2,2], [0,0],[0,0],color='steelblue')
+#    ax.plot([0, 0], [-2,2],[0,0],color='lime')
+#    ax.plot([0, 0], [0,0],[-2,2],color='maroon')
+    plot_axis(ax)
     ax.plot(x[:j+i], y[:j+i], z[:j+i], 'o-', color='lime')
     plt.savefig("movie%d.png" %(j+i))
 for k in range(1,180):
-    ax.plot([-2,2], [0,0],[0,0],color='steelblue')
-    ax.plot([0, 0], [-2,2],[0,0],color='lime')
-    ax.plot([0, 0], [0,0],[-2,2],color='maroon')
+#    ax.plot([-2,2], [0,0],[0,0],color='steelblue')
+#    ax.plot([0, 0], [-2,2],[0,0],color='lime')
+#    ax.plot([0, 0], [0,0],[-2,2],color='maroon')
+    plot_axis(ax)
     ax.plot(x[:j+i+k], y[:j+i+k], z[:j+i+k], 'o-', color='maroon')
     plt.savefig("movie%d.png" %(j+i+k))
