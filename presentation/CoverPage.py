@@ -133,8 +133,10 @@ VY = vector_location([0,1,0],2*np.pi, 2*np.pi, 2*np.pi)
 VZ = vector_location([0,0,1],2*np.pi, 2*np.pi, 2*np.pi)
 
 fig = plt.figure()
+fig.patch.set_facecolor('green')
 ax1 = fig.add_subplot(111, projection='3d')
-ax1.set_facecolor('xkcd:black')
+#ax1.set_facecolor('xkcd:black')
+#ax1.patch.set_facecolor('red')
 ax1.set_xlim(-1.1, 1.1)
 ax1.set_ylim(-1.1, 1.1)
 ax1.set_zlim(-1.1, 1.1)
@@ -196,4 +198,4 @@ for j in range(0, len(x3)):
 #for j in range(0, len(x3)):
 #    ax2.scatter(x3[:j], y3[:j], z3[:j], '.', color='maroon',s=2)
 
-plt.savefig("coverPage2.png", dpi=400)
+plt.savefig("coverPage3.png", dpi=400)
