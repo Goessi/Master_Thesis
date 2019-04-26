@@ -1,12 +1,11 @@
 # Design and implementation of a Python module for quaternions
 > Codes for Master thesis in Uni Stuttgart
----
 ![CoverPage](https://github.com/Goessi/Master_Thesis/blob/master/coverPage1.png)
 ### Table of Contents
-- [Author Info] (#author-info)
-- [Description] (#description)
-- [How To Use] (#how-to-use)
-- [License] (#license)
+- [Author Info](#author-info)
+- [Description](#description)
+- [How To Use](#how-to-use)
+- [License](#license)
 ---
 ## Author Info
 |  Author  |         Email          |
@@ -80,5 +79,6 @@ q1.toDCM()
 ~~~~
 ---
 ## License
-
+MIT License
+#### [back to top](#design-and-implementation-of-a-python-module-for-quaternions)
 ---
